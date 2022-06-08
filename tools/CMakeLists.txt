@@ -1,0 +1,5 @@
+set(BIN_TARGET "audio-to-midi")
+file(GLOB_RECURSE BIN_SRCS "${BIN_TARGET}/*.cpp")
+add_executable(${BIN_TARGET} ${BIN_SRCS})
+target_link_libraries(${BIN_TARGET} "${PROJECT_NAME}")
+install(TARGETS ${BIN_TARGET})

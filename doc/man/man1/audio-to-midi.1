@@ -1,0 +1,51 @@
+.TH "audio-to-midi" 1 "20 May 2022" "" "audio-to-midi Documentation"
+
+.SH NAME
+audio-to-midi \- Use pitch detection methods to convert an audio file to MIDI
+
+.SH SYNOPSIS
+.B audio-to-midi
+[\-h]
+[\-s \fISIZE\fP]
+[\-i \fISIZE\fP]
+[\-o \fIFILE\fP]
+[\-m \fIMETHOD\fP]
+[\-v]
+[\-e \fIFILE\fP]
+[\-p \fINUM\fP]
+.I audiofile
+
+.SH DESCRIPTION
+
+.P
+This program performs pitch detection on an input audio file and outputs the detected notes as MIDI file.
+If \fIaudiofile\fP is \fB"-"\fP, then \fBstdin\fP will be used.
+
+.TP
+.B \-h, \-\-help
+Show help.
+.TP
+.B \-s, \-\-buf-size \fISIZE
+Sets the buffer size of the FFT to the given value (default: 1024).
+A larger buffer size means higher spectral resolution, but lower temporal resolution.
+.TP
+.B \-i, \-\-hop-size \fISIZE
+Sets the hop size for the FFT (default: 1024).
+.TP
+.B \-o, \-\-output \fIFILE
+Sets the name of the output MIDI file to the given value. By default the output name is the name of the input file, but with the file extension set to \fB.midi\fP.
+.TP
+.B \-m, \-\-method \fIMETHOD
+Use the given pitch detection method. Possible values are \fByin\fP, \fBfftune-spectral\fP, \fBfftune-sfizz\fP.
+.TP
+.B \-v, \-\-verbose
+Output detailed log messages.
+.TP
+.B \-e, \-\-external-path \fIFILE
+Sets the name of the external path, that is necessary for some pitch detection methods.
+.TP
+.B \-p, \-\-polyphony \fINUM
+Sets the maximum polyphony (default: 1).
+
+.SH EXIT STATUS
+Returns zero on success.
