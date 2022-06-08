@@ -56,7 +56,16 @@ static SF_VIRTUAL_IO virtio = {filelen, seek, read, write, tell};
 class virt_data {
 public:
 	virt_data() = delete;
-	explicit virt_data(std::istream *data);
+	/**
+	 * @brief Constructs a virt_data object
+	 *
+	 * The \p data parameter must be a valid pointer to an input stream
+	 * which must supply the audio data
+	 *
+	 * In case the audio data is not in a container, but just in raw format, the format of the audio data must be specified with the remaining parameters.
+	 * If the audio data is in a container (i.e. pretty much every audio file format), then the format will be detected automatically.
+	 */
+	explicit virt_data(std::istream *data, int raw_format = 0, int raw_channels = 0, int raw_samplerate = 0);
 	/**
 	 * @brief The input data stream
 	 *
@@ -70,6 +79,24 @@ public:
 	 * This holds the offset into the virtual file
 	 */
 	sf_count_t memory_head = 0;
+	/**
+	 * @brief The audio format
+	 *
+	 * This property must only be set if the input is raw audio.
+	 */
+	int raw_format = 0;
+	/**
+	 * @brief The number of channels
+	 *
+	 * This property must only be set if the input is raw audio.
+	 */
+	int raw_channels = 0;
+	/**
+	 * @brief The samplerate
+	 *
+	 * This property must only be set if the input is raw audio.
+	 */
+	int raw_samplerate = 0;
 };
 
 }

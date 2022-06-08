@@ -29,7 +29,7 @@ void audio_file::open(const int fd) {
 }
 
 void audio_file::open(virt_file::virt_data &vio) {
-	file = SndfileHandle(virt_file::virtio, &vio);
+	file = SndfileHandle(virt_file::virtio, &vio, SFM_READ, vio.raw_format, vio.raw_channels, vio.raw_samplerate);
 }
 
 bool audio_file::is_ok() const {

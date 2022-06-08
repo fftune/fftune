@@ -53,8 +53,11 @@ sf_count_t tell(void *user_data) {
 	return d->memory_head;
 }
 
-virt_data::virt_data(std::istream *data) {
+virt_data::virt_data(std::istream *data, int raw_format, int raw_channels, int raw_samplerate) {
 	this->data = data;
+	this->raw_format = raw_format;
+	this->raw_channels = raw_channels;
+	this->raw_samplerate = raw_samplerate;
 }
 
 }
