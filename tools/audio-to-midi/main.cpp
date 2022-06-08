@@ -75,7 +75,7 @@ int main(int argc, char *const argv[])
 	fftune::audio_file input_audio;
 	if (in_file == "-") {
 		// read from stdin
-		fftune::virt_file::virt_data vio;
+		auto vio = fftune::virt_file::virt_data(&std::cin);
 		input_audio.open(vio);
 	} else {
 		input_audio.open(in_file);

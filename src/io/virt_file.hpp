@@ -55,6 +55,15 @@ static SF_VIRTUAL_IO virtio = {filelen, seek, read, write, tell};
  */
 class virt_data {
 public:
+	virt_data() = delete;
+	explicit virt_data(std::istream *data);
+	/**
+	 * @brief The input data stream
+	 *
+	 * This can be std::cin for example
+	 * The pointer must be valid for the lifetime of the audio_file
+	 */
+	std::istream *data = nullptr;
 	/**
 	 * @brief The current read/write head
 	 *
