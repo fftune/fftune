@@ -47,7 +47,7 @@ void midi_file::flush() {
 
 void midi_file::add_notes(note_estimates notes, double duration) {
 	constexpr float confidence_threshold = 0.6f;
-	for (auto note : notes) {
+	for (const auto &note : notes) {
 		if (!note.valid()) {
 			// not on piano
 			continue;
@@ -65,14 +65,14 @@ void midi_file::add_notes(note_estimates notes, double duration) {
 #ifdef __clang__
 			// clang does not yet support ranges filter
 			std::vector<midi_event> orphaned_notes;
-			for (auto i : pending_events) {
-				if (std::ranges::none_of(notes, [&](const auto& n){ return i.note == n.note; })) {
+			for (const auto &i : pending_events) {
+				if (std::ranges::none_of(notes, [&](const auto &n){ return i.note == n.note; })) {
 					orphaned_notes.push_back(i);
 				}
 			}
 #else
 			// all notes that were played previously but are not played anymore
-			auto orphaned_notes = pending_events | std::ranges::views::filter([&](const auto& ev){ return std::ranges::none_of(notes, [&](const auto& n){ return ev.note == n.note; }); });
+			auto orphaned_notes = pending_events | std::ranges::views::filter([&](const auto &ev){ return std::ranges::none_of(notes, [&](const auto &n){ return ev.note == n.note; }); });
 #endif
 			midi_event new_note = {note.note, clock, note.velocity};
 			if (orphaned_notes.empty()) {
@@ -80,10 +80,19 @@ void midi_file::add_notes(note_estimates notes, double duration) {
 				pending_events.push_back(new_note);
 			} else {
 				// lead the nearest voice to the new note
-				auto nearest_note = std::ranges::min_element(orphaned_notes, [&](const auto& a, const auto& b){ return std::abs(a.note - note.note) < std::abs(b.note - note.note); });
+				auto nearest_note = std::ranges::min_element(orphaned_notes, [&](const auto &a, const auto &b){ return std::abs(a.note - note.note) < std::abs(b.note - note.note); });
 				flush_event(*nearest_note);
 				// recreate as new note
+#ifdef __clang__
+				// for clang nearest_note is not a reference to the real element (see above)
+				for (size_t e = 0; e < pending_events.size(); ++e) {
+					if (pending_events[e].note == nearest_note->note) {
+						pending_events[e] = new_note;
+					}
+				}
+#else
 				*nearest_note = new_note;
+#endif
 			}
 		}
 		// else the note was already playing so we can just keep everything as is
