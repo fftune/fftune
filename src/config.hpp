@@ -11,6 +11,7 @@ namespace fftune {
  */
 enum class pitch_detection_method {
 	Yin,
+	Fast_Comb,
 	Fftune_Spectral,
 	Fftune_Sfizz,
 	Invalid
@@ -107,6 +108,7 @@ public:
 };
 
 constexpr const config yin_config {pitch_detection_method::Yin};
+constexpr const config fast_comb_config {pitch_detection_method::Fast_Comb};
 constexpr const config fftune_spectral_config {pitch_detection_method::Fftune_Spectral};
 constexpr const config fftune_sfizz_config {pitch_detection_method::Fftune_Sfizz};
 

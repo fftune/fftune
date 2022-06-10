@@ -5,6 +5,8 @@
 #include <string>
 #include <vector>
 
+#include "fft/bin.hpp"
+
 namespace fftune {
 
 constexpr const int MidiA4 = 69;
@@ -40,6 +42,12 @@ public:
 	 * The \p freq parameter denotes the frequency of the pitch estimate
 	 */
 	explicit pitch_estimate(float freq, float magnitude = 0.f, float confidence = 1.f);
+	/**
+	 * @brief Constructs a pitch_estimate object
+	 *
+	 * The \p fft_bin parameter is used to automatically calculate the frequency.
+	 */
+	explicit pitch_estimate(const bin &fft_bin);
 	/**
 	 * @brief Checks if this is a valid estimate
 	 *

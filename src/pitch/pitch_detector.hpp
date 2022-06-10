@@ -3,6 +3,7 @@
 #include "fftune_sfizz.hpp"
 #include "fftune_spectral.hpp"
 #include "yin.hpp"
+#include "fast_comb.hpp"
 
 namespace fftune {
 
@@ -34,7 +35,7 @@ public:
 	 *
 	 * This member holds the correct pitch detection backend, and must be chosen at compile time.
 	 */
-	typename std::conditional<T.algorithm == pitch_detection_method::Yin, yin, typename std::conditional<T.algorithm == pitch_detection_method::Fftune_Sfizz, fftune_sfizz, fftune_spectral>::type>::type method {T};
+	typename std::conditional<T.algorithm == pitch_detection_method::Yin, yin, typename std::conditional<T.algorithm == pitch_detection_method::Fftune_Sfizz, fftune_sfizz, typename std::conditional<T.algorithm == pitch_detection_method::Fftune_Spectral, fftune_spectral, fast_comb>::type>::type>::type method {T};
 	/**
 	 * @brief Performs pitch detection
 	 *

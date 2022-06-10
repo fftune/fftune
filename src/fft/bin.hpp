@@ -1,8 +1,10 @@
 #pragma once
 
 #include <complex>
+#include <string>
+#include <vector>
 
-#include "util/music.hpp"
+#include "sample_buffer.hpp"
 
 namespace fftune {
 

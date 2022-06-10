@@ -55,6 +55,9 @@ pitch_estimate::pitch_estimate(float freq, float magnitude, float confidence) {
 	this->confidence = confidence;
 }
 
+pitch_estimate::pitch_estimate(const bin &fft_bin) : pitch_estimate(fft_bin.frequency, fft_bin.magnitude) {
+}
+
 bool pitch_estimate::valid() const {
 	return freq_valid(this->frequency);
 }

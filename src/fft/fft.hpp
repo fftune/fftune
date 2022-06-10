@@ -6,6 +6,8 @@
 #include <fftw3.h>
 
 #include "bin.hpp"
+#include "config.hpp"
+#include "pitch/pitch.hpp"
 
 namespace fftune {
 
