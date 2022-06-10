@@ -1,6 +1,6 @@
 #include "tests.hpp"
 
-class PitchTest : public :: testing::Test {
+class PitchTest : public ::testing::Test {
 protected:
 	fftune::sample_buffer buf {tests::config.buffer_size};
 	void SetUp() override {

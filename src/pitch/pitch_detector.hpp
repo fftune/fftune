@@ -1,8 +1,8 @@
 #pragma once
 
-#include "yin.hpp"
 #include "fftune_sfizz.hpp"
 #include "fftune_spectral.hpp"
+#include "yin.hpp"
 
 namespace fftune {
 
@@ -26,7 +26,9 @@ public:
 	 * The templated config decides which pitch detection backend is used, at compile time.
 	 * The parameter config \p conf is passed to the underlying pitch detection backend at runtime.
 	 */
-	explicit pitch_detector(config conf) : method(conf) {}
+	explicit pitch_detector(config conf)
+		: method(conf) {
+	}
 	/**
 	 * @brief The pitch detection backend
 	 *

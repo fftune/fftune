@@ -1,13 +1,13 @@
 #pragma once
 
 #include <algorithm>
-#include <math.h>
 #include <filesystem>
+#include <math.h>
 #include <vector>
 
 #include "config.hpp"
-#include "sample_buffer.hpp"
 #include "pitch/pitch.hpp"
+#include "sample_buffer.hpp"
 
 namespace fftune {
 

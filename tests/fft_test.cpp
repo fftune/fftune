@@ -1,6 +1,6 @@
 #include "tests.hpp"
 
-class FftTest : public :: testing::Test {
+class FftTest : public ::testing::Test {
 protected:
 	fftune::sample_buffer buf {tests::config.buffer_size};
 };
@@ -38,7 +38,7 @@ TEST_F(FftTest, Sizes) {
 	for (; buf_size <= max_bufsize; buf_size *= 2) {
 		fftune::sample_buffer b {buf_size};
 		// init is actually the bottleneck here, so optimize for it
-		auto fft = fftune::fft (b.size, tests::config.sample_rate, fftune::fft_heuristic::OptimizeInit);
+		auto fft = fftune::fft(b.size, tests::config.sample_rate, fftune::fft_heuristic::OptimizeInit);
 
 		fftune::gen_sine(fftune::FreqA4, tests::config.sample_rate, b.data, b.size);
 		const auto bins = fft.detect(b);

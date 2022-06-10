@@ -1,10 +1,11 @@
 #pragma once
 
 #include <string>
+
 #include <sndfile.hh>
 
-#include "util/music.hpp"
 #include "io/virt_file.hpp"
+#include "util/music.hpp"
 
 namespace fftune {
 

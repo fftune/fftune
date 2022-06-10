@@ -22,7 +22,7 @@ float window::hanning(const size_t i, const size_t n) {
 }
 
 float window::hamming(const size_t i, const size_t n) {
-	constexpr float a0 = 24.f/46.f;
+	constexpr float a0 = 24.f / 46.f;
 	constexpr float a1 = 1.f - a0;
 	constexpr float pi2 = M_PI * 2.f;
 	return a0 - a1 * std::cos(pi2 * i / n);

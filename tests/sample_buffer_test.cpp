@@ -1,6 +1,6 @@
 #include "tests.hpp"
 
-class SamplebufferTest : public :: testing::Test {
+class SamplebufferTest : public ::testing::Test {
 protected:
 	fftune::sample_buffer buf {tests::config.buffer_size};
 	void SetUp() override {

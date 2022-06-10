@@ -1,12 +1,12 @@
 #pragma once
 
-#include <ranges>
 #include <algorithm>
-#include <string>
-#include <iostream>
-#include <vector>
 #include <filesystem>
 #include <fstream>
+#include <iostream>
+#include <ranges>
+#include <string>
+#include <vector>
 
 namespace fftune {
 
@@ -18,7 +18,7 @@ void save_string(const std::string &str, const std::filesystem::path &filename);
 
 template<typename T>
 concept printable = requires(T t) {
-	{ std::cout << t } -> std::same_as<std::ostream&>;
+	{ std::cout << t } -> std::same_as<std::ostream &>;
 };
 
 template<printable t>

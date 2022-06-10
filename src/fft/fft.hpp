@@ -2,6 +2,7 @@
 
 #include <cstring>
 #include <vector>
+
 #include <fftw3.h>
 
 #include "bin.hpp"

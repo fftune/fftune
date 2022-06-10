@@ -41,7 +41,7 @@ bool midi_file::write(const std::filesystem::path &out_file) {
 }
 
 void midi_file::flush() {
-	std::ranges::for_each(pending_events, [&](const auto& ev){ flush_event(ev); });
+	std::ranges::for_each(pending_events, [&](const auto &ev) { flush_event(ev); });
 	pending_events.clear();
 }
 
@@ -58,7 +58,7 @@ void midi_file::add_notes(note_estimates notes, double duration) {
 			// TODO: Actually keep the last note
 			continue;
 		}
-		auto ev = std::ranges::find_if(pending_events, [&](const auto& e){ return e.note == note.note; });
+		auto ev = std::ranges::find_if(pending_events, [&](const auto &e) { return e.note == note.note; });
 		if (ev == pending_events.cend()) {
 			// we didn't have this note playing already
 			// cool, let's find all the notes that were previously on and are now not on anymore
@@ -66,13 +66,13 @@ void midi_file::add_notes(note_estimates notes, double duration) {
 			// clang does not yet support ranges filter
 			std::vector<midi_event> orphaned_notes;
 			for (const auto &i : pending_events) {
-				if (std::ranges::none_of(notes, [&](const auto &n){ return i.note == n.note; })) {
+				if (std::ranges::none_of(notes, [&](const auto &n) { return i.note == n.note; })) {
 					orphaned_notes.push_back(i);
 				}
 			}
 #else
 			// all notes that were played previously but are not played anymore
-			auto orphaned_notes = pending_events | std::ranges::views::filter([&](const auto &ev){ return std::ranges::none_of(notes, [&](const auto &n){ return ev.note == n.note; }); });
+			auto orphaned_notes = pending_events | std::ranges::views::filter([&](const auto &ev) { return std::ranges::none_of(notes, [&](const auto &n) { return ev.note == n.note; }); });
 #endif
 			midi_event new_note = {note.note, clock, note.velocity};
 			if (orphaned_notes.empty()) {
@@ -80,7 +80,7 @@ void midi_file::add_notes(note_estimates notes, double duration) {
 				pending_events.push_back(new_note);
 			} else {
 				// lead the nearest voice to the new note
-				auto nearest_note = std::ranges::min_element(orphaned_notes, [&](const auto &a, const auto &b){ return std::abs(a.note - note.note) < std::abs(b.note - note.note); });
+				auto nearest_note = std::ranges::min_element(orphaned_notes, [&](const auto &a, const auto &b) { return std::abs(a.note - note.note) < std::abs(b.note - note.note); });
 				flush_event(*nearest_note);
 				// recreate as new note
 #ifdef __clang__

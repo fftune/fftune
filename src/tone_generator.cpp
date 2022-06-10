@@ -30,8 +30,8 @@ bool tone_generator::init(size_t buffer_size, float sample_rate, std::filesystem
 	 * But maybe we fix this SFIZZ_BUFFERSIZE bug in the future, so then we don't have to write back in multiple passes
 	 * Until then we really only use the lowest SFIZZ_BUFFERSIZE bytes of the buffers
 	 */
-	left_out = (float*) malloc(sizeof(float) * std::max(buffer_size, SFIZZ_BUFFERSIZE));
-	right_out = (float*) malloc(sizeof(float) * std::max(buffer_size, SFIZZ_BUFFERSIZE));
+	left_out = (float *) malloc(sizeof(float) * std::max(buffer_size, SFIZZ_BUFFERSIZE));
+	right_out = (float *) malloc(sizeof(float) * std::max(buffer_size, SFIZZ_BUFFERSIZE));
 	std::fill(left_out, left_out + buffer_size, 0.f);
 	std::fill(right_out, right_out + buffer_size, 0.f);
 
@@ -58,7 +58,7 @@ void tone_generator::start(const std::vector<note_estimate> &midis, size_t offse
 	// midi reset
 	sfizz.allSoundOff();
 	// activate all passed notes
-	std::ranges::for_each(midis, [&](const auto& midi){ sfizz.noteOn(0, midi.note, midi.velocity); });
+	std::ranges::for_each(midis, [&](const auto &midi) { sfizz.noteOn(0, midi.note, midi.velocity); });
 
 	// wait for the attack phase of the note to decay
 	// this allows us to get a more pitch consistent sample

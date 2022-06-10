@@ -1,7 +1,7 @@
 #pragma once
 
-#include <string>
 #include <array>
+#include <string>
 
 extern "C" {
 #include <smf.h>

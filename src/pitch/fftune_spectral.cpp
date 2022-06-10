@@ -2,7 +2,8 @@
 
 namespace fftune {
 
-fftune_spectral::fftune_spectral(const config &conf) : spec(conf.buffer_size, conf.sample_rate) {
+fftune_spectral::fftune_spectral(const config &conf)
+	: spec(conf.buffer_size, conf.sample_rate) {
 	this->conf = conf;
 }
 
@@ -27,7 +28,7 @@ note_estimates fftune_spectral::detect(const sample_buffer &in) {
 		// compute standard deviation
 		// float standard_deviation = 0.f;
 		// for (int j = std::max(i - local_width, 0); j < std::min(i + local_width, static_cast<int>(spectrum.size())); ++j) {
-			// standard_deviation += (spectrum[j].magnitude - local_mean) * (spectrum[j].magnitude - local_mean);
+		// standard_deviation += (spectrum[j].magnitude - local_mean) * (spectrum[j].magnitude - local_mean);
 		// }
 		// standard_deviation = std::sqrt(standard_deviation / num_locals);
 		const auto deviation = candidate.magnitude - local_mean;
@@ -39,7 +40,8 @@ note_estimates fftune_spectral::detect(const sample_buffer &in) {
 				const auto drift_off = std::abs(factor - std::round(factor));
 				if (drift_off < (SemitoneRatio - 1.f)) {
 					// add our weight to the base pitch
-					c.confidence += weight * drift_off / (SemitoneRatio - 1.f);;
+					c.confidence += weight * drift_off / (SemitoneRatio - 1.f);
+					;
 					if (factor < 1.5f) {
 						// TODO: interpolate frequencies to improve accuracy
 					}

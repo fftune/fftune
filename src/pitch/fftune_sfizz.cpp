@@ -2,7 +2,8 @@
 
 namespace fftune {
 
-fftune_sfizz::fftune_sfizz(const config &conf) : guess_buffer(conf.buffer_size), spectrum(conf.buffer_size, conf.sample_rate) {
+fftune_sfizz::fftune_sfizz(const config &conf)
+	: guess_buffer(conf.buffer_size), spectrum(conf.buffer_size, conf.sample_rate) {
 	this->conf = conf;
 	// initialize sfizz backend
 	if (!tone_gen.init(conf)) {
@@ -22,7 +23,7 @@ note_estimates fftune_sfizz::detect(const sample_buffer &in) {
 		float confidence = 0.f;
 		// iterate over all possible notes
 		for (int guess = MidiMin; guess <= MidiMax; ++guess) {
-			if (std::ranges::any_of(result, [&](const auto& e){ return e.note == guess; })) {
+			if (std::ranges::any_of(result, [&](const auto &e) { return e.note == guess; })) {
 				// do not add the same note twice in a polyphonic setting
 				continue;
 			}

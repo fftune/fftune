@@ -7,7 +7,7 @@ namespace fftune {
 std::string to_lower(const std::string &s) {
 	std::string res;
 	res.resize(s.size());
-	std::transform(s.begin(), s.end(), res.begin(), [](auto c){ return std::tolower(c); });
+	std::transform(s.begin(), s.end(), res.begin(), [](auto c) { return std::tolower(c); });
 	return res;
 }
 

@@ -29,7 +29,7 @@ std::string midi_to_string(int midi) {
 		// not on piano
 		return "Invalid Midi " + std::to_string(midi);
 	}
-	constexpr const std::array names = { "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "H" };
+	constexpr const std::array names = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "H"};
 	const int octave = midi / 12.0 - 1;
 	return names[midi % 12] + std::to_string(octave);
 }

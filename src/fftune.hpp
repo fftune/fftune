@@ -2,8 +2,8 @@
 
 #include <iostream>
 
-#include "io/midi_file.hpp"
 #include "io/audio_file.hpp"
+#include "io/midi_file.hpp"
 #include "pitch/pitch_detector.hpp"
 
 namespace fftune {
