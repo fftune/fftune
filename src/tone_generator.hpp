@@ -1,7 +1,10 @@
 #pragma once
 
 #include <filesystem>
+
+#ifdef HAS_SFIZZ
 #include <sfizz.hpp>
+#endif
 
 #include "util/music.hpp"
 
@@ -44,7 +47,9 @@ private:
 	float *left_out = nullptr;
 	float *right_out = nullptr;
 	size_t buffer_size;
+#ifdef HAS_SFIZZ
 	sfz::Sfizz sfizz;
+#endif
 };
 
 }

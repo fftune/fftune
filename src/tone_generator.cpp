@@ -21,6 +21,7 @@ bool tone_generator::init(const config &conf) {
 bool tone_generator::init(size_t buffer_size, float sample_rate, std::filesystem::path sfz) {
 	this->buffer_size = buffer_size;
 
+#ifdef HAS_SFIZZ
 	sfizz.setSamplesPerBlock(SFIZZ_BUFFERSIZE);
 	sfizz.setSampleRate(sample_rate);
 
@@ -36,6 +37,9 @@ bool tone_generator::init(size_t buffer_size, float sample_rate, std::filesystem
 	std::fill(right_out, right_out + buffer_size, 0.f);
 
 	return sfizz.loadSfzFile(sfz);
+#else
+	return true;
+#endif
 }
 
 void tone_generator::gen(sample_buffer &out) {
@@ -43,7 +47,9 @@ void tone_generator::gen(sample_buffer &out) {
 	float *stereo_out[] = {left_out, right_out};
 
 	for (size_t k = 0; k < buffer_size / SFIZZ_BUFFERSIZE; ++k) {
+#ifdef HAS_SFIZZ
 		sfizz.renderBlock(stereo_out, SFIZZ_BUFFERSIZE, 1);
+#endif
 		// write the data correctly padded to the output buffer
 		for (int i = 0; i < SFIZZ_BUFFERSIZE; ++i) {
 			// we simply just use the left channel, but we could also merge channels in the future
@@ -53,6 +59,7 @@ void tone_generator::gen(sample_buffer &out) {
 }
 
 void tone_generator::start(const std::vector<note_estimate> &midis, size_t offset) {
+#ifdef HAS_SFIZZ
 	float *stereo_out[] = {left_out, right_out};
 
 	// midi reset
@@ -65,6 +72,8 @@ void tone_generator::start(const std::vector<note_estimate> &midis, size_t offse
 	for (int i = 0; i < offset - 1; ++i) {
 		sfizz.renderBlock(stereo_out, SFIZZ_BUFFERSIZE, 1);
 	}
+#endif
+	// TODO: Add fallback, if sfizz is not available
 }
 
 }

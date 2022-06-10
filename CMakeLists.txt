@@ -2,6 +2,7 @@ project(fftune)
 cmake_minimum_required(VERSION 3.23)
 
 option(BUILD_TESTING "Build the testing tree." OFF)
+option(NO_SFIZZ "Build without sfizz support." OFF)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -14,11 +15,18 @@ file(GLOB_RECURSE HDRS "src/*.hpp")
 
 # dependencies
 find_package(PkgConfig REQUIRED)
-list(APPEND PKGCONFIG_MODULES "sfizz" "fftw3f" "smf" "sndfile")
+list(APPEND PKGCONFIG_MODULES "fftw3f" "smf" "sndfile")
+
+if(NOT NO_SFIZZ)
+	list(APPEND PKGCONFIG_MODULES "sfizz")
+	add_compile_definitions(HAS_SFIZZ)
+endif()
+
 foreach(PKG IN LISTS PKGCONFIG_MODULES)
 	pkg_check_modules("${PKG}" REQUIRED IMPORTED_TARGET "${PKG}")
 endforeach()
 list(TRANSFORM PKGCONFIG_MODULES PREPEND "PkgConfig::")
+
 
 add_library("${PROJECT_NAME}" SHARED ${SRCS})
 target_link_libraries("${PROJECT_NAME}" ${PKGCONFIG_MODULES})
