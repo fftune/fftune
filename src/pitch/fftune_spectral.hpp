@@ -4,6 +4,11 @@
 
 namespace fftune {
 
+/**
+ * @brief The fftune_spectral pitch detection algorithm
+ *
+ * Performs pitch detection by detecting peaks in the frequency spectrum.
+ */
 class fftune_spectral {
 public:
 	/**

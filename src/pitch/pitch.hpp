@@ -26,27 +26,100 @@ float freq_to_wavelength(float freq, float sample_rate);
 int volume_to_velocity(float v);
 
 
+/**
+ * @brief A pitch estimate
+ *
+ * This class represents an estimate or guess for a musical pitch
+ */
 class pitch_estimate {
 public:
 	pitch_estimate() = default;
+	/**
+	 * @brief Constructs a pitch_estimate object
+	 *
+	 * The \p freq parameter denotes the frequency of the pitch estimate
+	 */
 	explicit pitch_estimate(float freq, float magnitude = 0.f, float confidence = 1.f);
+	/**
+	 * @brief Checks if this is a valid estimate
+	 *
+	 * This returns \c false if the pitch is either extremely high or extremely low.
+	 * For example the pitch should be playable on a piano.
+	 */
 	bool valid() const;
 
+	/**
+	 * @brief The frequency
+	 *
+	 * The frequency of the pitch_estimate
+	 */
 	float frequency = 0.f;
+	/**
+	 * @brief The magnitude of the pitch_estiamte
+	 *
+	 * The loudness of the pitch
+	 */
 	float magnitude = 0.f;
+	/**
+	 * @brief The confidence of the guess
+	 *
+	 * This denotes the confidence of the estimate.
+	 * 0.0 means not confident, 1.0 means maximum confident.
+	 */
 	float confidence = 1.f;
 };
 
+/**
+ * @brief A note estimate
+ *
+ * This class represents an estimate or guess for a musical note
+ */
 class note_estimate {
 public:
 	note_estimate() = default;
+	/**
+	 * @brief Constructs a note_estimate
+	 *
+	 * The \p note parameter denotes the Midi note
+	 */
 	explicit note_estimate(int note, int velocity = 80, float confidence = 1.f);
+	/**
+	 * @brief Constructs a note_estimate
+	 *
+	 * Automatically generates the nearest note to the passed pitch_estimate \p p
+	 */
 	explicit note_estimate(pitch_estimate p);
+	/**
+	 * @brief Convert to string
+	 *
+	 * Returns a human-readable representation of the note_estimate
+	 */
 	std::string to_string() const;
+	/**
+	 * @brief Check if the musical note is valid
+	 *
+	 * The note must at least be playable on a standard piano.
+	 */
 	bool valid() const;
 
+	/**
+	 * @brief The musical note
+	 *
+	 * This is the Midi number of this note_estimate
+	 */
 	int note = 0;
+	/**
+	 * @brief The loudness of the note
+	 *
+	 * This is the Midi velocity of the note
+	 */
 	int velocity = 80;
+	/**
+	 * @brief The confidence of the guess
+	 *
+	 * This denotes the confidence of the estimate.
+	 * 0.0 means not confident, 1.0 means maximum confident.
+	 */
 	float confidence = 1.f;
 	/**
 	 * @brief The intonation of this note
