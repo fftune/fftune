@@ -32,7 +32,11 @@ note_estimates yin::detect(const sample_buffer &in) {
 			if (candidate.valid()) {
 				result.push_back(note_estimate(candidate));
 			}
-			break;
+
+			if (result.size() >= conf.max_polyphony) {
+				// end if we found enough notes
+				break;
+			}
 		}
 	}
 	return result;
