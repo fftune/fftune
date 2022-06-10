@@ -1,6 +1,8 @@
 # fftune
 
-This is an audio pitch detection library written in modern C++, providing multiple pitch detection methods and a ready to use binary to convert an input WAV file into a MIDI file.
+[![Continuous Integration](https://github.com/fftune/fftune/actions/workflows/ci.yml/badge.svg)](https://github.com/fftune/fftune/actions/workflows/ci.yml)
+
+This is an audio pitch detection library written in modern C++20, providing multiple pitch detection methods and a ready to use binary to convert an input WAV file into a MIDI file.
 
 ## Building
 
@@ -48,6 +50,17 @@ parec --rate 48000 --format s32le --channels 1 | \
 ```
 
 There are many more options available, view them by showing the help with `audio-to-midi -h` or by looking at the provided man-page with `man audio-to-midi`.
+
+## Documentation
+
+This library comes with a developer API documentation. To build it use:
+
+```bash
+cd doc
+doxygen
+```
+
+You can then open `doc/html/index.html` in a web browser.
 
 ## Tests
 
