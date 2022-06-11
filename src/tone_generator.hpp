@@ -43,10 +43,19 @@ public:
 	 * This activates the notes given via \p midis, effectively sending noteon Midi events.
 	 */
 	void start(const std::vector<note_estimate> &midis, size_t offset = 7);
+	/**
+	 * @brief Generates pure harmonics
+	 *
+	 * Generates harmonics without sfizz and writes them to \p out
+	 * This assumes that \p out has a buffer size of \a buffer_size
+	 */
+	void gen_harmonics(sample_buffer &out, const std::vector<note_estimate> &midis);
 private:
 	float *left_out = nullptr;
 	float *right_out = nullptr;
-	size_t buffer_size;
+	size_t buffer_size = 0;
+	float sample_rate = 0.f;
+	std::vector<note_estimate> pending_notes;
 #ifdef HAS_SFIZZ
 	sfz::Sfizz sfizz;
 #endif

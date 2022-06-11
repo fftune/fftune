@@ -17,6 +17,7 @@ constexpr const int MidiInvalid = -1;
 constexpr const float SemitoneRatio = 1.059463094359295; // std::pow(2.f, 1.f / 12.f)
 constexpr const float SemitoneRatioLog = 0.08333333333; // std::log2(SemitoneRatio)
 
+float midi_to_freq(int midi);
 float freq_to_midi_float(float freq);
 int freq_to_midi(float freq);
 float freq_to_intonation(float freq);

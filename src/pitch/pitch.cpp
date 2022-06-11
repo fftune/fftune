@@ -2,7 +2,27 @@
 
 namespace fftune {
 
+float midi_to_freq(int midi) {
+	// assume equal temperament
+	return FreqA4 * std::pow(2.f, (midi - MidiA4) / 12.f);
+}
+
 float freq_to_midi_float(float freq) {
+	/**
+	 * This computes the Midi offset (which corresponds to a semitone) from a given frequency
+	 *
+	 * Let s = 2^(1/12) be the semitone ratio (this is the case for equal temperament).
+	 * Now obviously one can compute the frequency from a semitione offset o from A4 by computing:
+	 * f = 440 * s^o
+	 *
+	 * Now for this function we compute the inverse by solving the same equation for o:
+	 *
+	 * f = 440 * s^o
+	 * <=> f / 440 = s^o
+	 * <=> log(f / 440) / log(s) = o
+	 *
+	 * Evaluating this formula and rounding gets us the nearest match.
+	 */
 	return MidiA4 + std::log2(freq / FreqA4) / SemitoneRatioLog;
 }
 

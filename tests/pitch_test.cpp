@@ -3,8 +3,10 @@
 class PitchTest : public ::testing::Test {
 protected:
 	fftune::sample_buffer buf {tests::config.buffer_size};
+	fftune::tone_generator gen;
 	void SetUp() override {
-		fftune::gen_harmonic(fftune::FreqA4, tests::config.sample_rate, buf.data, buf.size);
+		gen.init(tests::config.buffer_size, tests::config.sample_rate, "");
+		gen.gen_harmonics(buf, {fftune::note_estimate(fftune::MidiA4)});
 	}
 };
 
