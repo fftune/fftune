@@ -57,6 +57,12 @@ public:
 	 */
 	int velocity = 80;
 };
+/**
+ * @brief A vector of midi_event objects
+ *
+ * This vector holds multiple midi_event objects.
+ */
+using midi_events = std::vector<midi_event>;
 
 
 /**
@@ -102,7 +108,7 @@ private:
 	smf_t *smf;
 	smf_track_t *track;
 	double clock = 0.0;
-	std::vector<midi_event> pending_events;
+	midi_events pending_events;
 };
 
 }

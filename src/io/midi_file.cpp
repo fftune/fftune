@@ -64,7 +64,7 @@ void midi_file::add_notes(note_estimates notes, double duration) {
 			// cool, let's find all the notes that were previously on and are now not on anymore
 #ifdef __clang__
 			// clang does not yet support ranges filter
-			std::vector<midi_event> orphaned_notes;
+			midi_events orphaned_notes;
 			for (const auto &i : pending_events) {
 				if (std::ranges::none_of(notes, [&](const auto &n) { return i.note == n.note; })) {
 					orphaned_notes.push_back(i);
