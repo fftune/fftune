@@ -48,8 +48,10 @@ float magnitude_to_velocity(float magnitude) {
 	constexpr const float min_mag = -100.f;
 	constexpr const float max_mag = -0.25f;
 	// linearly interpolate between
-	const auto factor = std::abs(std::clamp(magnitude, min_mag, max_mag)) / (max_mag - min_mag);
-	return std::lerp(VelocityMin, VelocityMax, factor);
+	const auto factor = (max_mag - std::clamp(magnitude, min_mag, max_mag)) / (max_mag - min_mag);
+
+	// flipped parameters, because the factor is flipped (min_mag results in highest factor)
+	return std::lerp(VelocityMax, VelocityMin, factor);
 }
 
 std::string midi_to_string(int midi) {

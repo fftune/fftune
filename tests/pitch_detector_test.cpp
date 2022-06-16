@@ -11,7 +11,7 @@ protected:
 };
 
 
-TEST_F(PitchDetectorTest, yin) {
+TEST_F(PitchDetectorTest, Yin) {
 	fftune::pitch_detector<fftune::yin_config> p {tests::config};
 	const auto notes = p.detect(buf);
 	ASSERT_FALSE(notes.empty());

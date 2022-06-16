@@ -11,7 +11,7 @@ protected:
 };
 
 
-TEST_F(SamplebufferTest, storage) {
+TEST_F(SamplebufferTest, Storage) {
 	EXPECT_EQ(buf.size, tests::config.buffer_size);
 	// test that the buffer holds the correct data
 	for (size_t i = 0; i < buf.size; ++i) {
@@ -19,7 +19,7 @@ TEST_F(SamplebufferTest, storage) {
 	}
 }
 
-TEST_F(SamplebufferTest, cycle) {
+TEST_F(SamplebufferTest, Cycle) {
 	constexpr const auto hop = tests::config.buffer_size / 4;
 	// cycle buffer
 	buf.cycle(hop);
@@ -30,7 +30,7 @@ TEST_F(SamplebufferTest, cycle) {
 	}
 }
 
-TEST_F(SamplebufferTest, zero_cycle) {
+TEST_F(SamplebufferTest, ZeroCycle) {
 	buf.cycle(0);
 	// rotating by 0 should not have done anything
 	for (size_t i = 0; i < buf.size; ++i) {
