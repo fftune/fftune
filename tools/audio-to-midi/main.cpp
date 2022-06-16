@@ -14,16 +14,15 @@ int main(int argc, char *const argv[]) {
 	fftune::config config;
 	// parse args
 	constexpr struct option long_opts[] = {
-		{ "help", no_argument, nullptr, 'h' },
-		{ "buf-size", required_argument, nullptr, 's' },
-		{ "hop-size", required_argument, nullptr, 'i' },
-		{ "output", required_argument, nullptr, 'o' },
-		{ "method", required_argument, nullptr, 'm' },
-		{ "verbose", no_argument, nullptr, 'v' },
-		{ "external-path", required_argument, nullptr, 'e' },
-		{ "polyphony", required_argument, nullptr, 'p' },
-		{ nullptr, 0, nullptr, 0 }
-	};
+		{"help", no_argument, nullptr, 'h'},
+		{"buf-size", required_argument, nullptr, 's'},
+		{"hop-size", required_argument, nullptr, 'i'},
+		{"output", required_argument, nullptr, 'o'},
+		{"method", required_argument, nullptr, 'm'},
+		{"verbose", no_argument, nullptr, 'v'},
+		{"external-path", required_argument, nullptr, 'e'},
+		{"polyphony", required_argument, nullptr, 'p'},
+		{nullptr, 0, nullptr, 0}};
 	constexpr const char *short_opts = "hs:o:m:ve:p:";
 	int opt;
 	while ((opt = getopt_long(argc, argv, short_opts, long_opts, nullptr)) != -1) {

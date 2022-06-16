@@ -1,9 +1,9 @@
 #pragma once
 
+#include "fast_comb.hpp"
 #include "fftune_sfizz.hpp"
 #include "fftune_spectral.hpp"
 #include "yin.hpp"
-#include "fast_comb.hpp"
 
 namespace fftune {
 

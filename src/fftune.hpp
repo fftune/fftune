@@ -14,6 +14,8 @@ namespace fftune {
  * This is the documentation for the fftune library.
  *
  * This library provides pitch detection methods for automatic music transcription.
+ *
+ * A good starting point for reading the documentation is the pitch_detector class
  */
 
 // https://isocpp.org/wiki/faq/templates#templates-defn-vs-decl

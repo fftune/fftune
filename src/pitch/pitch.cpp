@@ -44,6 +44,14 @@ bool midi_valid(int midi) {
 	return midi >= MidiMin && midi <= MidiMax;
 }
 
+float magnitude_to_velocity(float magnitude) {
+	constexpr const float min_mag = -100.f;
+	constexpr const float max_mag = -0.25f;
+	// linearly interpolate between
+	const auto factor = std::abs(std::clamp(magnitude, min_mag, max_mag)) / (max_mag - min_mag);
+	return std::lerp(VelocityMin, VelocityMax, factor);
+}
+
 std::string midi_to_string(int midi) {
 	if (!midi_valid(midi)) {
 		// not on piano
@@ -75,7 +83,8 @@ pitch_estimate::pitch_estimate(float freq, float magnitude, float confidence) {
 	this->confidence = confidence;
 }
 
-pitch_estimate::pitch_estimate(const bin &fft_bin) : pitch_estimate(fft_bin.frequency, fft_bin.magnitude) {
+pitch_estimate::pitch_estimate(const bin &fft_bin)
+	: pitch_estimate(fft_bin.frequency, fft_bin.magnitude) {
 }
 
 bool pitch_estimate::valid() const {
@@ -92,7 +101,7 @@ note_estimate::note_estimate(int note, int velocity, float confidence) {
 note_estimate::note_estimate(pitch_estimate p) {
 	this->note = freq_to_midi(p.frequency);
 	this->intonation = freq_to_intonation(p.frequency);
-	// TODO: magnitude to velocity
+	this->velocity = magnitude_to_velocity(p.magnitude);
 }
 
 std::string note_estimate::to_string() const {

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <algorithm>
 #include <array>
 #include <cmath>
 #include <string>
@@ -14,6 +15,8 @@ constexpr const float FreqA4 = 440.f;
 constexpr const int MidiMax = 108; // highest note on piano
 constexpr const int MidiMin = 21; // lowest note on piano
 constexpr const int MidiInvalid = -1;
+constexpr const int VelocityMax = 127; // maxium Midi velocity
+constexpr const int VelocityMin = 0; // minimum Midi velocity
 constexpr const float SemitoneRatio = 1.059463094359295; // std::pow(2.f, 1.f / 12.f)
 constexpr const float SemitoneRatioLog = 0.08333333333; // std::log2(SemitoneRatio)
 
@@ -23,6 +26,7 @@ int freq_to_midi(float freq);
 float freq_to_intonation(float freq);
 bool freq_valid(float freq);
 bool midi_valid(int midi);
+float magnitude_to_velocity(float magnitude);
 std::string midi_to_string(int midi);
 float wavelength_to_freq(float tau, float sample_rate);
 float freq_to_wavelength(float freq, float sample_rate);
