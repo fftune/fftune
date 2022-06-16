@@ -29,12 +29,22 @@ note_estimates fast_comb::detect(const sample_buffer &in) {
 					// found one!
 					best = subharmonic_candidate;
 					magnitude = magnitude_factor * spectrum[best].magnitude;
-					// TODO: subtract from peaks' magnitude
 				}
 			}
 		}
 		result.push_back(note_estimate(pitch_estimate(spectrum[best])));
+
+		// subtract the amplitude from overtones
+		for (size_t overtone_candidate = 0; overtone_candidate < spectrum.size(); ++overtone_candidate) {
+			const auto factor = spectrum[overtone_candidate].frequency / spectrum[best].frequency;
+			const auto drift_off = std::abs(factor - std::round(factor));
+			if (drift_off < (SemitoneRatio - 1.f) / 0.25) {
+				spectrum[overtone_candidate].magnitude -= std::abs(spectrum[best].magnitude);
+			}
+		}
+		// we don't need this one anymore, so erase it
 		spectrum.erase(spectrum.begin() + best);
+		std::sort(spectrum.begin(), spectrum.end(), [](const auto &l, const auto &r) { return l.magnitude > r.magnitude; });
 	}
 	return result;
 }
