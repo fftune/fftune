@@ -6,10 +6,7 @@ fftune_sfizz::fftune_sfizz(const config &conf)
 	: guess_buffer(conf.buffer_size), spectrum(conf.buffer_size, conf.sample_rate) {
 	this->conf = conf;
 	// initialize sfizz backend
-	if (!tone_gen.init(conf)) {
-		// TODO: Maybe add an is_okay() to all pitch detectors
-		std::cerr << "Error while initializing tone_generator" << std::endl;
-	}
+	tone_gen.init(conf);
 }
 
 note_estimates fftune_sfizz::detect(const sample_buffer &in) {

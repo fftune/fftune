@@ -57,6 +57,7 @@ private:
 	float sample_rate = 0.f;
 	std::vector<note_estimate> pending_notes;
 #ifdef HAS_SFIZZ
+	bool sfizz_okay = false;
 	sfz::Sfizz sfizz;
 #endif
 };

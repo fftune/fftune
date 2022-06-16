@@ -41,6 +41,11 @@ bool tone_generator::init(size_t buffer_size, float sample_rate, std::filesystem
 
 	if (!sfz.empty()) {
 		result = sfizz.loadSfzFile(sfz);
+		sfizz_okay = result;
+
+		if (!result) {
+			std::cerr << "Error while loading sfz file: " << sfz << std::endl;
+		}
 	}
 #endif
 	return result;
@@ -48,27 +53,34 @@ bool tone_generator::init(size_t buffer_size, float sample_rate, std::filesystem
 
 void tone_generator::gen(sample_buffer &out) {
 #ifdef HAS_SFIZZ
-	// note that we assume that out has the same size as buffer_size passed in init()
-	float *stereo_out[] = {left_out, right_out};
+	if (sfizz_okay) {
+		// note that we assume that out has the same size as buffer_size passed in init()
+		float *stereo_out[] = {left_out, right_out};
 
-	for (size_t k = 0; k < buffer_size / SFIZZ_BUFFERSIZE; ++k) {
-		sfizz.renderBlock(stereo_out, SFIZZ_BUFFERSIZE, 1);
-		// write the data correctly padded to the output buffer
-		for (int i = 0; i < SFIZZ_BUFFERSIZE; ++i) {
-			// we simply just use the left channel, but we could also merge channels in the future
-			out.data[k * SFIZZ_BUFFERSIZE + i] = left_out[i];
+		for (size_t k = 0; k < buffer_size / SFIZZ_BUFFERSIZE; ++k) {
+			sfizz.renderBlock(stereo_out, SFIZZ_BUFFERSIZE, 1);
+			// write the data correctly padded to the output buffer
+			for (int i = 0; i < SFIZZ_BUFFERSIZE; ++i) {
+				// we simply just use the left channel, but we could also merge channels in the future
+				out.data[k * SFIZZ_BUFFERSIZE + i] = left_out[i];
+			}
 		}
+
+		return;
 	}
-#else
+#endif
 	// fallback: If sfizz is not available, we generate pure harmonics instead
 	gen_harmonics(out, pending_notes);
-#endif
 }
 
 void tone_generator::start(const std::vector<note_estimate> &midis, size_t offset) {
 	pending_notes = midis;
 
 #ifdef HAS_SFIZZ
+	if (!sfizz_okay) {
+		return;
+	}
+
 	float *stereo_out[] = {left_out, right_out};
 
 	// midi reset
