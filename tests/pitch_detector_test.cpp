@@ -1,6 +1,6 @@
 #include "tests.hpp"
 
-class PitchTest : public ::testing::Test {
+class PitchDetectorTest : public ::testing::Test {
 protected:
 	fftune::sample_buffer buf {tests::config.buffer_size};
 	fftune::tone_generator gen;
@@ -11,7 +11,7 @@ protected:
 };
 
 
-TEST_F(PitchTest, yin) {
+TEST_F(PitchDetectorTest, yin) {
 	fftune::pitch_detector<fftune::yin_config> p {tests::config};
 	const auto notes = p.detect(buf);
 	ASSERT_FALSE(notes.empty());
