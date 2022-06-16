@@ -39,7 +39,6 @@ note_estimates fftune_sfizz::detect(const sample_buffer &in) {
 			 * This is to avoid differences in volume having an effect on further steps of the algorithm
 			 */
 			match_volume(guess_buffer, mean_rec_volume);
-			// TODO: Maybe generate multiple spectrums of the sound, to increase resolution of our fft
 			const auto guess_spectrum = spectrum.detect(guess_buffer);
 
 			// TODO: Optimize so that we don't recompute the discrete derivative of rec_spectrum every time again

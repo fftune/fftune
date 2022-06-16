@@ -98,10 +98,103 @@ public:
 	 * This will return the sample rate of the backing input file.
 	 */
 	float sample_rate() const;
+
+
+	/**
+	 * @brief An iterator over an audio_file
+	 *
+	 * This class can be used to iterate over an audio_file in a for-each loop
+	 */
+	class iterator {
+	public:
+		/**
+		 * @brief Constructs an iterator
+		 *
+		 * This constructs an iterator for the given \p audio filee
+		 */
+		iterator(audio_file *audio, sample_buffer *buf, size_t hop_size);
+		/**
+		 * @brief The backing audio_file
+		 *
+		 * This member holds the backing audio_file to read from.
+		 */
+		audio_file *audio = nullptr;
+		/**
+		 * @brief The backing buffer
+		 *
+		 * This member holds the backing sample_buffer to read into.
+		 */
+		sample_buffer *buf = nullptr;
+		/**
+		 * @brief The hop size
+		 *
+		 * This member holds the amount of data to read in each iteration
+		 */
+		size_t hop_size = 0;
+
+		/**
+		 * @brief Decides if two iterators are not equal
+		 *
+		 * This is used to enable automatic for-each loops
+		 */
+		bool operator!=(iterator r);
+		/**
+		 * @brief Returns the underlying data
+		 *
+		 * This returns the backing sample_buffer
+		 */
+		sample_buffer *operator*();
+		/**
+		 * @brief Increments the iterator
+		 *
+		 * This will read data from the backing audio_file again
+		 * and return a fresh sample_buffer with the new data.
+		 */
+		void operator++();
+	};
+
+	/**
+	 * @brief A view over an audio_file
+	 *
+	 * This view can automatically create an audio_file::iterator
+	 */
+	class view {
+	public:
+		/**
+		 * @brief Constructs a view
+		 *
+		 * This constructs a view for the given \p buf and \p hop_size
+		 */
+		view(audio_file *audio, sample_buffer *buf, size_t hop_size);
+		/**
+		 * @brief The beginning iterator of the view
+		 *
+		 * This iterator is the start of the view and has already one iteration of samples read from the audio_file
+		 */
+		iterator begin();
+		/**
+		 * @brief The end iterator of the view
+		 *
+		 * This iterator denotes the end of the view
+		 */
+		iterator end();
+	private:
+		audio_file *audio;
+		sample_buffer *buf;
+		size_t hop_size = 0;
+	};
+
+	/**
+	 * @brief Creates an audio_file::view
+	 *
+	 * This creates an iteratable audio_file::view for the given \p hop_size
+	 */
+	view iter(sample_buffer *buf, size_t hop_size);
 private:
 	void alloc_buffer(size_t num_frames);
 	SndfileHandle file;
 	std::unique_ptr<sample_buffer> buffer;
+	bool at_end = false;
 };
 
 }

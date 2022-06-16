@@ -2,7 +2,6 @@
 #include "io/virt_file.hpp"
 
 namespace fftune {
-// TODO: Maybe allow to iterate over the audio file with a for-each loop
 
 audio_file::audio_file() {
 }
@@ -33,7 +32,7 @@ void audio_file::open(virt_file::virt_data &vio) {
 }
 
 bool audio_file::is_ok() const {
-	return file.error() == SF_ERR_NO_ERROR;
+	return file.error() == SF_ERR_NO_ERROR && !at_end;
 }
 
 std::string audio_file::error_message() const {
@@ -66,12 +65,68 @@ int audio_file::read(sample_buffer &buf, size_t n) {
 	for (size_t i = 0; i < n; ++i) {
 		buf.data[i + buf.size - n] = this->buffer->data[i * channels];
 	}
-	return result ? n : 0;
+
+	if (result) {
+		return n;
+	} else {
+		at_end = true;
+		return 0;
+	}
 }
 
 float audio_file::sample_rate() const {
 	return file.samplerate();
 }
+
+
+audio_file::iterator::iterator(audio_file *audio, sample_buffer *buf, size_t hop_size) {
+	this->audio = audio;
+	this->buf = buf;
+	this->hop_size = hop_size;
+}
+
+bool audio_file::iterator::operator!=(iterator r) {
+	if (r.audio == audio) {
+		// if both audio backend, then they are equal if they are both nullptr
+		return audio != nullptr;
+	} else if (r.audio == nullptr) {
+		// if audio backends are different, then they are only equal if one is nullptr and the other is not okay
+		return audio->is_ok();
+	} else if (audio == nullptr) {
+		return r.audio->is_ok();
+	}
+	return true;
+}
+
+sample_buffer *audio_file::iterator::operator*() {
+	return this->buf;
+}
+
+void audio_file::iterator::operator++() {
+	if (!audio) {
+		return;
+	}
+	audio->read(*buf, hop_size);
+}
+
+audio_file::view::view(audio_file *audio, sample_buffer *buf, size_t hop_size)
+	: audio(audio), buf(buf), hop_size(hop_size) {
+}
+
+audio_file::iterator audio_file::view::begin() {
+	auto result = audio_file::iterator(audio, buf, hop_size);
+	++result;
+	return result;
+}
+
+audio_file::iterator audio_file::view::end() {
+	return audio_file::iterator(nullptr, nullptr, 0);
+}
+
+audio_file::view audio_file::iter(sample_buffer *buf, size_t hop_size) {
+	return audio_file::view(this, buf, hop_size);
+}
+
 
 void audio_file::alloc_buffer(size_t num_frames) {
 	const size_t size = num_frames * file.channels();
