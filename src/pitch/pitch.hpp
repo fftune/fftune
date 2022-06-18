@@ -81,6 +81,8 @@ public:
 	 */
 	float confidence = 1.f;
 };
+using pitch_estimates = std::vector<pitch_estimate>;
+
 
 /**
  * @brief A note estimate

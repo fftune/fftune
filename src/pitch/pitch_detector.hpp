@@ -1,5 +1,6 @@
 #pragma once
 
+#include "double_fft.hpp"
 #include "fast_comb.hpp"
 #include "fftune_sfizz.hpp"
 #include "fftune_spectral.hpp"
@@ -35,7 +36,7 @@ public:
 	 *
 	 * This member holds the correct pitch detection backend, and must be chosen at compile time.
 	 */
-	typename std::conditional<T.algorithm == pitch_detection_method::Yin, yin, typename std::conditional<T.algorithm == pitch_detection_method::Fftune_Sfizz, fftune_sfizz, typename std::conditional<T.algorithm == pitch_detection_method::Fftune_Spectral, fftune_spectral, fast_comb>::type>::type>::type method {T};
+	typename std::conditional<T.algorithm == pitch_detection_method::Yin, yin, typename std::conditional<T.algorithm == pitch_detection_method::Fftune_Sfizz, fftune_sfizz, typename std::conditional<T.algorithm == pitch_detection_method::Fftune_Spectral, fftune_spectral, typename std::conditional<T.algorithm == pitch_detection_method::Fftune_Spectral, fast_comb, double_fft>::type>::type>::type>::type method {T};
 	/**
 	 * @brief Performs pitch detection
 	 *

@@ -13,7 +13,7 @@ note_estimates fast_comb::detect(const sample_buffer &in) {
 
 	auto spectrum = spec.detect(in);
 	// sort peaks by magnitude
-	std::sort(spectrum.begin(), spectrum.end(), [](const auto &l, const auto &r) { return l.magnitude > r.magnitude; });
+	std::ranges::sort(spectrum, [](const auto &l, const auto &r) { return l.magnitude > r.magnitude; });
 	for (size_t voice = 0; voice < conf.max_polyphony; ++voice) {
 		size_t best = 0;
 		auto magnitude = magnitude_factor * spectrum[best].magnitude;
@@ -44,7 +44,7 @@ note_estimates fast_comb::detect(const sample_buffer &in) {
 		}
 		// we don't need this one anymore, so erase it
 		spectrum.erase(spectrum.begin() + best);
-		std::sort(spectrum.begin(), spectrum.end(), [](const auto &l, const auto &r) { return l.magnitude > r.magnitude; });
+		std::ranges::sort(spectrum, [](const auto &l, const auto &r) { return l.magnitude > r.magnitude; });
 	}
 	return result;
 }

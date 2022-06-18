@@ -26,4 +26,12 @@ void save_string(const std::string &str, const std::filesystem::path &filename) 
 	f << str;
 }
 
+#ifndef NDEBUG
+void debug_csv(const std::string &csv) {
+	static int csv_num = 0;
+	save_string(csv, std::filesystem::temp_directory_path() / (std::to_string(csv_num) + ".csv"));
+	++csv_num;
+}
+#endif
+
 }

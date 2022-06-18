@@ -1,6 +1,8 @@
 #pragma once
 
+#include <algorithm>
 #include <complex>
+#include <ranges>
 #include <string>
 #include <vector>
 
@@ -99,5 +101,7 @@ bins discrete_derivative(const bins &b);
  * A lower value means more similar
  */
 float bins_distance(const bins &a, const bins &b);
+void bins_normalize_pos(bins &b);
+void bins_normalize_sin(bins &b);
 
 }

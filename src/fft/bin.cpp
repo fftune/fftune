@@ -81,4 +81,38 @@ float bins_distance(const bins &a, const bins &b) {
 	return result;
 }
 
+void bins_normalize_pos(bins &b) {
+	// force only positive values by shifting everything up such that the minimum is now zero
+	const auto min_magnitude = std::ranges::min_element(b, [](const auto &l, const auto &r) { return l.magnitude < r.magnitude; })->magnitude;
+	std::ranges::for_each(b, [&](auto &p) { p.magnitude += min_magnitude; });
+}
+
+void bins_normalize_sin(bins &b) {
+	constexpr const int local_width = 20;
+	std::vector<float> magnitudes;
+	magnitudes.resize(b.size());
+	for (int i = 0; i < b.size(); ++i) {
+		// compute local mean
+		float local_mean = 0.f;
+		size_t num_locals = 0;
+		for (int j = std::max(i - local_width, 0); j < std::min(i + local_width, static_cast<int>(b.size())); ++j) {
+			local_mean += b[j].magnitude;
+			++num_locals;
+		}
+		local_mean /= num_locals;
+
+		// compute deviation
+		float max_deviation = 0.f;
+		for (int j = std::max(i - local_width, 0); j < std::min(i + local_width, static_cast<int>(b.size())); ++j) {
+			max_deviation = std::max(max_deviation, std::abs(b[j].magnitude - local_mean));
+		}
+		magnitudes[i] = (b[i].magnitude - local_mean) / max_deviation;
+	}
+
+	// copy magnitudes
+	for (size_t i = 0; i < b.size(); ++i) {
+		b[i].magnitude = magnitudes[i];
+	}
+}
+
 }

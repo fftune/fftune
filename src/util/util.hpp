@@ -15,6 +15,10 @@ float squared(const float n);
 bool is_int(const float n);
 void save_string(const std::string &str, const std::filesystem::path &filename);
 
+#ifndef NDEBUG
+void debug_csv(const std::string &csv);
+#endif
+
 
 template<typename T>
 concept printable = requires(T t) {
