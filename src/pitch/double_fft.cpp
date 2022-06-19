@@ -17,13 +17,12 @@ note_estimates double_fft::detect(const sample_buffer &in) {
 
 	for (size_t step = 1; step < spectrum.size() / 2; ++step) {
 		// compute the mean
-		float mean = 0.f;
+		float sum = 0.f;
 		for (size_t i = 0; i < spectrum.size(); i += step) {
-			mean += spectrum[i].magnitude;
+			sum += spectrum[i].magnitude;
 		}
-		mean /= std::floor(spectrum.size() / step);
 
-		dfft.push_back(std::make_pair(step, mean));
+		dfft.push_back(std::make_pair(step, sum));
 	}
 	// sort by mean
 	std::ranges::sort(dfft, [](const auto &l, const auto &r) { return l.second > r.second; });

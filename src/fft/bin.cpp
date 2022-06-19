@@ -88,7 +88,7 @@ void bins_normalize_pos(bins &b) {
 }
 
 void bins_normalize_sin(bins &b) {
-	constexpr const int local_width = 20;
+	const int local_width = b.size() / 300;
 	std::vector<float> magnitudes;
 	magnitudes.resize(b.size());
 	for (int i = 0; i < b.size(); ++i) {
