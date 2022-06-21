@@ -8,4 +8,4 @@ RUN pacman -Syu --noconfirm git gcc clang cmake ninja pkgconf doxygen gtest sfiz
 COPY . /tmp/fftune
 WORKDIR /tmp/fftune
 RUN scripts/build.sh
-CMD audio-to-midi /tmp/audio.wav
+CMD audio-to-midi /tmp/data/audio.wav

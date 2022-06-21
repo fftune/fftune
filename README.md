@@ -29,8 +29,8 @@ To build the container, use `podman` or `docker`:
 
 ```bash
 podman build -t fftune .
-# Convert audio.wav to audio.midi
-podman run -v "$PWD/audio.wav:/tmp/audio.wav" fftune
+# Convert audio.wav in current directory to audio.midi
+podman run -v "$PWD:/tmp/data" fftune
 ```
 
 ## Usage
