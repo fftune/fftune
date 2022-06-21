@@ -61,14 +61,14 @@ public:
 	 *
 	 * The buffer size used for various things, such as computing the FFT or reading audio data
 	 */
-	size_t buffer_size = 1024;
+	size_t buffer_size = 4096;
 	/**
 	 * @brief The hop size
 	 *
 	 * The hop size determines in which substeps the read audio data will be processed.
 	 * The \a buffer_size must be an integer multiple of the \a hop_size
 	 */
-	size_t hop_size = 1024;
+	size_t hop_size = 4096;
 	/**
 	 * @brief The sample rate
 	 *
