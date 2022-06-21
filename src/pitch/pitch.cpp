@@ -78,6 +78,10 @@ int volume_to_velocity(float v) {
 	return 60 + 60 * scalar;
 }
 
+bool evaluates_to_same_note(float f1, float f2) {
+	return freq_to_midi(f1) == freq_to_midi(f2);
+}
+
 
 pitch_estimate::pitch_estimate(float freq, float magnitude, float confidence) {
 	this->frequency = freq;

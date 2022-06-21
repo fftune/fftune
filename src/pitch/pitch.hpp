@@ -31,6 +31,7 @@ std::string midi_to_string(int midi);
 float wavelength_to_freq(float tau, float sample_rate);
 float freq_to_wavelength(float freq, float sample_rate);
 int volume_to_velocity(float v);
+bool evaluates_to_same_note(float f1, float f2);
 
 
 /**

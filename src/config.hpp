@@ -11,6 +11,7 @@ namespace fftune {
  */
 enum class pitch_detection_method {
 	Yin,
+	Yin_Patient,
 	Fast_Comb,
 	Fftune_Spectral,
 	Fftune_Sfizz,
@@ -54,7 +55,7 @@ public:
 	 *
 	 * This member determines which pitch detection method will be used
 	 */
-	pitch_detection_method algorithm = pitch_detection_method::Fftune_Spectral;
+	pitch_detection_method algorithm = pitch_detection_method::Yin_Patient;
 	/**
 	 * @brief The buffer size
 	 *
@@ -109,6 +110,7 @@ public:
 };
 
 constexpr const config yin_config {pitch_detection_method::Yin};
+constexpr const config yin_patient_config {pitch_detection_method::Yin_Patient};
 constexpr const config fast_comb_config {pitch_detection_method::Fast_Comb};
 constexpr const config fftune_spectral_config {pitch_detection_method::Fftune_Spectral};
 constexpr const config fftune_sfizz_config {pitch_detection_method::Fftune_Sfizz};
