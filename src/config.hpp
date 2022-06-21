@@ -83,6 +83,19 @@ public:
 	 */
 	size_t max_polyphony = 1;
 	/**
+	 * @brief Controls how volatile Midi notes are for pitch detection
+	 *
+	 * This number determines how many different notes have to be detected before the Midi interface
+	 * considers the last detected note wrong.
+	 *
+	 * This number can be increased to prevent short pitch detection errors,
+	 * but this also decreases temporal resolution and flexibility.
+	 *
+	 * A value of 2 means that a different note has to be detected for 2 consecutive windows,
+	 * before the note really changes.
+	 */
+	size_t midi_stiffness = 0;
+	/**
 	 * @brief Whether to print verbose messages
 	 *
 	 * If \c true, detailed information will be printed on stdout

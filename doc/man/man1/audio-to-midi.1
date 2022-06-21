@@ -13,6 +13,7 @@ audio-to-midi \- Use pitch detection methods to convert an audio file to MIDI
 [\-v]
 [\-e \fIFILE\fP]
 [\-p \fINUM\fP]
+[\-d \fINUM\fP]
 .I audiofile
 
 .SH DESCRIPTION
@@ -46,6 +47,9 @@ Sets the name of the external path, that is necessary for some pitch detection m
 .TP
 .B \-p, \-\-polyphony \fINUM
 Sets the maximum polyphony (default: 1).
+.TP
+.B \-d, \-\-stiffness \fINUM
+Sets the Midi stiffness (default: 0).
 
 .SH EXIT STATUS
 Returns zero on success.

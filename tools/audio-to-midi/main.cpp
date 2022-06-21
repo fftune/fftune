@@ -22,8 +22,9 @@ int main(int argc, char *const argv[]) {
 		{"verbose", no_argument, nullptr, 'v'},
 		{"external-path", required_argument, nullptr, 'e'},
 		{"polyphony", required_argument, nullptr, 'p'},
+		{"stiffness", required_argument, nullptr, 'd'},
 		{nullptr, 0, nullptr, 0}};
-	constexpr const char *short_opts = "hs:o:m:ve:p:";
+	constexpr const char *short_opts = "hs:o:m:ve:p:d:";
 	int opt;
 	while ((opt = getopt_long(argc, argv, short_opts, long_opts, nullptr)) != -1) {
 		switch (opt) {
@@ -55,6 +56,9 @@ int main(int argc, char *const argv[]) {
 			break;
 		case 'p':
 			config.max_polyphony = atoi(optarg);
+			break;
+		case 'd':
+			config.midi_stiffness = atoi(optarg);
 			break;
 		case '?':
 		default:

@@ -32,7 +32,7 @@ bool audio_to_midi(audio_file &input_file, const std::filesystem::path &midi, co
 		std::cerr << "Invalid config: " << conf.error_str() << std::endl;
 		return false;
 	}
-	midi_file output;
+	auto output = midi_file(conf.midi_stiffness);
 
 	conf.sample_rate = input_file.sample_rate();
 	sample_buffer buf {conf.buffer_size};

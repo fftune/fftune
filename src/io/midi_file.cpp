@@ -24,7 +24,9 @@ smf_event_t *midi_event::to_smf(bool note_on) const {
 }
 
 
-midi_file::midi_file() {
+midi_file::midi_file(size_t stiffness) {
+	this->stiffness = stiffness;
+
 	smf = smf_new();
 	track = smf_track_new();
 	smf_add_track(smf, track);
@@ -61,6 +63,16 @@ void midi_file::add_notes(note_estimates notes, double duration) {
 		auto ev = std::ranges::find_if(pending_events, [&](const auto &e) { return e.note == note.note; });
 		if (ev == pending_events.cend()) {
 			// we didn't have this note playing already
+
+			last_change++;
+			// check if we exceed stiffness requirements
+			if (last_change > stiffness) {
+				// ok we can go on, but we have to reset the last change
+				last_change = 0;
+			} else {
+				// did not pass stiffness requirements
+				continue;
+			}
 			// cool, let's find all the notes that were previously on and are now not on anymore
 #ifdef __clang__
 			// clang does not yet support ranges filter
@@ -96,6 +108,7 @@ void midi_file::add_notes(note_estimates notes, double duration) {
 			}
 		}
 		// else the note was already playing so we can just keep everything as is
+		last_change = 0;
 	}
 	clock += duration;
 }

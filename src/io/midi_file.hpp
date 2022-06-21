@@ -76,8 +76,12 @@ public:
 	 * @brief Constructs a Midi file
 	 *
 	 * Creates an empty Midi file
+	 *
+	 * The parameter \p stiffness controls the Midi stiffness,
+	 * which controls how fast the notes can change
+	 * when a different note is detected.
 	 */
-	midi_file();
+	midi_file(size_t stiffness = 0);
 	/**
 	 * @brief Destructs a Midi file
 	 *
@@ -109,6 +113,8 @@ private:
 	smf_track_t *track;
 	double clock = 0.0;
 	midi_events pending_events;
+	size_t stiffness = 0;
+	size_t last_change = 0;
 };
 
 }
