@@ -7,10 +7,10 @@ This is an audio pitch detection library written in modern C++20, providing mult
 ## Building
 
 The following libraries are required to be installed:
-- [fftw3f](https://www.fftw.org/)
-- [libsmf](http://libsmf.sourceforge.net/)
-- [libsndfile](https://github.com/libsndfile/libsndfile)
-- [sfizz](https://github.com/sfztools/sfizz)
+- [fftw3f](https://www.fftw.org/) - For fast Fourier transformations
+- [libsmf](http://libsmf.sourceforge.net/) - For Midi file support
+- [libsndfile](https://github.com/libsndfile/libsndfile) - For audio file support
+- [sfizz](https://github.com/sfztools/sfizz) - For `sfz` file support
 
 `fftune` is built using `cmake`:
 
