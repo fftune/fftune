@@ -45,4 +45,13 @@ void verbose_log(const t &loggable, const bool verbose) {
 	}
 }
 
+template<typename T>
+std::string vector_to_csv(const std::vector<T> &v) {
+	std::string result;
+	for (const auto &i : v) {
+		result.append(i.to_csv() + "\n");
+	}
+	return result;
+}
+
 }

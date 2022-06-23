@@ -97,6 +97,10 @@ bool pitch_estimate::valid() const {
 	return freq_valid(this->frequency);
 }
 
+std::string pitch_estimate::to_csv() const {
+	return std::to_string(frequency) + "," + std::to_string(magnitude) + "," + std::to_string(confidence);
+}
+
 
 note_estimate::note_estimate(int note, int velocity, float confidence) {
 	this->note = note;
@@ -116,6 +120,10 @@ std::string note_estimate::to_string() const {
 
 bool note_estimate::valid() const {
 	return midi_valid(note);
+}
+
+std::string note_estimate::to_csv() const {
+	return std::to_string(note) + std::to_string(velocity) + std::to_string(confidence);
 }
 
 std::ostream &operator<<(std::ostream &os, const note_estimate &n) {

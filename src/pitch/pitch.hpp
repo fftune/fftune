@@ -81,6 +81,7 @@ public:
 	 * 0.0 means not confident, 1.0 means maximum confident.
 	 */
 	float confidence = 1.f;
+	std::string to_csv() const;
 };
 using pitch_estimates = std::vector<pitch_estimate>;
 
@@ -147,6 +148,7 @@ public:
 	 * This always assumes equal temperament.
 	 */
 	float intonation = 0.f;
+	std::string to_csv() const;
 };
 std::ostream &operator<<(std::ostream &os, const note_estimate &n);
 using note_estimates = std::vector<note_estimate>;
