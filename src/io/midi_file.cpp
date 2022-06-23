@@ -54,12 +54,12 @@ void midi_file::add_notes(note_estimates notes, double duration) {
 			// not on piano
 			continue;
 		}
-		if (note.confidence < confidence_threshold) {
+		// if (note.confidence < confidence_threshold) {
 			// if confidence is low, we assume that the last note repeats
 			// note = pending_event.note;
 			// TODO: Actually keep the last note
-			continue;
-		}
+			// continue;
+		// }
 		auto ev = std::ranges::find_if(pending_events, [&](const auto &e) { return e.note == note.note; });
 		if (ev == pending_events.cend()) {
 			// we didn't have this note playing already

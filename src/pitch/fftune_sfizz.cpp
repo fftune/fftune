@@ -51,7 +51,7 @@ note_estimates fftune_sfizz::detect(const sample_buffer &in) {
 		}
 
 		// check if we are confident enough
-		constexpr const float confidence_threshold = 0.05f;
+		constexpr const float confidence_threshold = 0.00f;
 		if (confidence > confidence_threshold) {
 			result.push_back(note_estimate(best_guess.first, volume_to_velocity(mean_rec_volume), confidence));
 		}
