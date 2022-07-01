@@ -81,6 +81,11 @@ public:
 	 * 0.0 means not confident, 1.0 means maximum confident.
 	 */
 	float confidence = 1.f;
+	/**
+	 * @brief Converts a pitch_estimate to CSV
+	 *
+	 * This can be useful for debugging. The CSV can be visualized in external software.
+	 */
 	std::string to_csv() const;
 };
 using pitch_estimates = std::vector<pitch_estimate>;
@@ -148,6 +153,11 @@ public:
 	 * This always assumes equal temperament.
 	 */
 	float intonation = 0.f;
+	/**
+	 * @brief Converts a note_estimate to CSV
+	 *
+	 * This can be useful for debugging. The CSV can be visualized in external software.
+	 */
 	std::string to_csv() const;
 };
 std::ostream &operator<<(std::ostream &os, const note_estimate &n);
