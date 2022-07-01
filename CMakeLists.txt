@@ -38,8 +38,8 @@ target_sources("${PROJECT_NAME}" PUBLIC FILE_SET HEADERS BASE_DIRS "src" FILES $
 include(GNUInstallDirs)
 install(TARGETS "${PROJECT_NAME}" FILE_SET HEADERS DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}")
 install(DIRECTORY "${CMAKE_SOURCE_DIR}/doc/man/" TYPE MAN)
-configure_file("${CMAKE_SOURCE_DIR}/assets/libfftune.pc.in" "${CMAKE_CURRENT_BINARY_DIR}/libfftune.pc" @ONLY)
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/libfftune.pc" DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
+configure_file("${CMAKE_SOURCE_DIR}/assets/fftune.pc.in" "${CMAKE_CURRENT_BINARY_DIR}/fftune.pc" @ONLY)
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/fftune.pc" DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
 
 
 # tools
