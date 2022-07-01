@@ -54,6 +54,9 @@ int main(int argc, char *argv[]) {
 	// set node properties
 	auto *props = pw_properties_new(PW_KEY_MEDIA_TYPE, "Audio", PW_KEY_MEDIA_CATEGORY, "Capture", PW_KEY_MEDIA_ROLE, "Music", nullptr);
 	data.loop = pw_main_loop_new(nullptr);
+	if (!data.loop) {
+		return 1;
+	}
 	// handle UNIX signals to quit the program
 	pw_loop_add_signal(pw_main_loop_get_loop(data.loop), SIGINT, quit, &data);
 	pw_loop_add_signal(pw_main_loop_get_loop(data.loop), SIGTERM, quit, &data);
