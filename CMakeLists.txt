@@ -27,6 +27,7 @@ endif()
 foreach(PKG IN LISTS PKGCONFIG_MODULES)
 	pkg_check_modules("${PKG}" REQUIRED IMPORTED_TARGET "${PKG}")
 endforeach()
+string(REPLACE ";" " " PKGCONFIG_REQUIRES "${PKGCONFIG_MODULES}")
 list(TRANSFORM PKGCONFIG_MODULES PREPEND "PkgConfig::")
 
 
