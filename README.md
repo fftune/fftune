@@ -62,7 +62,7 @@ doxygen
 
 You can then open `doc/html/index.html` in a web browser.
 
-If you are a developer and want to use this library for your own purposes, you can include the header with `#include <fftune.hpp>` and link against `libfftune.so`.
+If you are a developer and want to use this library for your own purposes, you can include the header with `#include <fftune.hpp>` and link against `libfftune.so`. Examples for using this library can be found in the [examples directory](examples/).
 
 ## Tests
 
