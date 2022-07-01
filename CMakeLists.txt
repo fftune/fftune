@@ -10,6 +10,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 include_directories("src")
+add_compile_definitions(FFTUNE_VERSION="${PROJECT_VERSION}")
 
 file(GLOB_RECURSE SRCS "src/*.cpp")
 file(GLOB_RECURSE HDRS "src/*.hpp")

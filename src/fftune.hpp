@@ -5,6 +5,7 @@
 #include "io/audio_file.hpp"
 #include "io/midi_file.hpp"
 #include "pitch/pitch_detector.hpp"
+#include "version.hpp"
 
 namespace fftune {
 
