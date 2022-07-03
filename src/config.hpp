@@ -16,6 +16,7 @@ enum class pitch_detection_method {
 	Fftune_Spectral,
 	Fftune_Sfizz,
 	Double_Fft,
+	Schmitt,
 	Invalid
 };
 /**
@@ -128,5 +129,6 @@ constexpr const config fast_comb_config {pitch_detection_method::Fast_Comb};
 constexpr const config fftune_spectral_config {pitch_detection_method::Fftune_Spectral};
 constexpr const config fftune_sfizz_config {pitch_detection_method::Fftune_Sfizz};
 constexpr const config double_fft_config {pitch_detection_method::Double_Fft};
+constexpr const config schmitt_config {pitch_detection_method::Schmitt};
 
 }

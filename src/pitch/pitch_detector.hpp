@@ -4,6 +4,7 @@
 #include "fast_comb.hpp"
 #include "fftune_sfizz.hpp"
 #include "fftune_spectral.hpp"
+#include "schmitt_trigger.hpp"
 #include "yin.hpp"
 #include "yin_patient.hpp"
 
@@ -37,7 +38,7 @@ public:
 	 *
 	 * This member holds the correct pitch detection backend, and must be chosen at compile time.
 	 */
-	typename std::conditional<T.algorithm == pitch_detection_method::Yin, yin, typename std::conditional<T.algorithm == pitch_detection_method::Fftune_Sfizz, fftune_sfizz, typename std::conditional<T.algorithm == pitch_detection_method::Fftune_Spectral, fftune_spectral, typename std::conditional<T.algorithm == pitch_detection_method::Fftune_Spectral, fast_comb, typename std::conditional<T.algorithm == pitch_detection_method::Double_Fft, double_fft, yin_patient>::type>::type>::type>::type>::type method {T};
+	typename std::conditional<T.algorithm == pitch_detection_method::Yin, yin, typename std::conditional<T.algorithm == pitch_detection_method::Fftune_Sfizz, fftune_sfizz, typename std::conditional<T.algorithm == pitch_detection_method::Fftune_Spectral, fftune_spectral, typename std::conditional<T.algorithm == pitch_detection_method::Fftune_Spectral, fast_comb, typename std::conditional<T.algorithm == pitch_detection_method::Double_Fft, double_fft, typename std::conditional<T.algorithm == pitch_detection_method::Yin_Patient, yin_patient, schmitt_trigger>::type>::type>::type>::type>::type>::type method {T};
 	/**
 	 * @brief Performs pitch detection
 	 *

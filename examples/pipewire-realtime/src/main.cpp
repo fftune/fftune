@@ -55,6 +55,7 @@ int main(int argc, char *argv[]) {
 	auto *props = pw_properties_new(PW_KEY_MEDIA_TYPE, "Audio", PW_KEY_MEDIA_CATEGORY, "Capture", PW_KEY_MEDIA_ROLE, "Music", nullptr);
 	data.loop = pw_main_loop_new(nullptr);
 	if (!data.loop) {
+		std::cerr << "Failed to initialize Pipewire" << std::endl;
 		return 1;
 	}
 	// handle UNIX signals to quit the program

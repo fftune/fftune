@@ -16,6 +16,8 @@ pitch_detection_method method_from_string(const std::string &m) {
 		return pitch_detection_method::Fast_Comb;
 	} else if (canonical == "double-fft") {
 		return pitch_detection_method::Double_Fft;
+	} else if (canonical == "schmitt") {
+		return pitch_detection_method::Schmitt;
 	} else {
 		return pitch_detection_method::Invalid;
 	}

@@ -17,6 +17,8 @@ bool dispatch_audio_to_midi(const std::filesystem::path &audio, const std::files
 		return audio_to_midi<fftune_spectral_config>(audio, midi, conf);
 	case pitch_detection_method::Double_Fft:
 		return audio_to_midi<double_fft_config>(audio, midi, conf);
+	case pitch_detection_method::Schmitt:
+		return audio_to_midi<schmitt_config>(audio, midi, conf);
 	default:
 		return audio_to_midi<fftune_spectral_config>(audio, midi, conf);
 	}
