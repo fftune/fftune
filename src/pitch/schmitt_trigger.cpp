@@ -1,5 +1,4 @@
 #include "schmitt_trigger.hpp"
-#include <bits/ranges_algo.h>
 
 namespace fftune {
 
@@ -29,8 +28,12 @@ note_estimates schmitt_trigger::detect(const sample_buffer &in) {
 		++i;
 	}
 	if (i >= in.size) {
-		// whoopsie, looks like we don't exceed the threshold at all in the current window
-		// TODO: Improvement: Instead of returning, lower the threshold and start from the beginning
+		/**
+		 * Whoopsie, looks like we don't exceed the threshold at all in the current window
+		 * This should be impossible, since we initialize the threshold relative to the current window's max/min values
+		 * So this code path should never be hit.
+		 * But better be safe than sorry and cause a segmentation fault
+		 */
 		return result;
 	}
 
