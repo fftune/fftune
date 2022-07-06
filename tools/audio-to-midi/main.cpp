@@ -4,7 +4,7 @@
 #include <iostream>
 
 void show_usage() {
-	std::cout << "Usage: wav-to-midi /path/to/input.wav\nView the man-page for more details" << std::endl;
+	std::cout << "Usage: wav-to-midi [-hsomvepd] /path/to/input.wav\nView the man-page for more details" << std::endl;
 }
 
 int main(int argc, char *const argv[]) {
