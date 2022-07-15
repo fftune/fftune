@@ -22,7 +22,7 @@ note_estimates double_fft::detect(const sample_buffer &in) {
 			sum += spectrum[i].magnitude;
 		}
 
-		dfft.push_back(std::make_pair(step, sum));
+		dfft.push_back(std::pair(step, sum));
 	}
 	// sort by mean
 	std::ranges::sort(dfft, [](const auto &l, const auto &r) { return l.second > r.second; });
