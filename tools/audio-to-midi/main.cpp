@@ -4,7 +4,20 @@
 #include <iostream>
 
 void show_usage() {
-	std::cout << "Usage: wav-to-midi [-hsomvepd] /path/to/input.wav\nView the man-page for more details" << std::endl;
+	std::cout << R"(Usage: wav-to-midi [-hsomvepd] /path/to/input.wav
+
+	-h, --help		Show help
+	-s, --buf-size SIZE	Change buffer and window size
+	-i, --hop-size SIZE	Change the window hop size
+	-o, --output FILE	Specify what file to output to
+	-m, --method METHOD	Specify the algorithm to use, for possible values see the man page
+	-v, --verbose		Output detailed log messages
+	-e, --external-path P	Set the external path necessary for some algorithms
+	-p, --polyphony NUM	Set the maximum amount of voices
+	-d, --stiffness NUM 	Set the Midi stiffness
+
+For more information visit the man page.
+)";
 }
 
 int main(int argc, char *const argv[]) {
@@ -43,7 +56,7 @@ int main(int argc, char *const argv[]) {
 		case 'm':
 			config.algorithm = fftune::method_from_string(optarg);
 			if (config.algorithm == fftune::pitch_detection_method::Invalid) {
-				std::cerr << "Invalid method " << optarg << std::endl;
+				std::cerr << "Unknown method " << optarg << std::endl;
 				return 1;
 			}
 			break;
