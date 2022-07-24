@@ -23,7 +23,7 @@ void sample_buffer::read(const sample_buffer &src) {
 }
 
 void sample_buffer::write(float *dest) const {
-	std::memcpy(dest, this->data, this->size);
+	std::memcpy(dest, this->data, this->size * sizeof(float));
 }
 
 void sample_buffer::cycle(size_t n) {
