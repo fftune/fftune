@@ -54,4 +54,13 @@ std::string vector_to_csv(const std::vector<T> &v) {
 	return result;
 }
 
+template<typename T>
+std::string num_vector_to_csv(const std::vector<T> &v) {
+	std::string result;
+	for (const auto &i : v) {
+		result.append(std::to_string(i) + "\n");
+	}
+	return result;
+}
+
 }
