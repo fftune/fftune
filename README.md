@@ -10,7 +10,7 @@ The following libraries are required to be installed:
 - [fftw3f](https://www.fftw.org/) - For fast Fourier transformations
 - [libsmf](http://libsmf.sourceforge.net/) - For Midi file support
 - [libsndfile](https://github.com/libsndfile/libsndfile) - For audio file support
-- [sfizz](https://github.com/sfztools/sfizz) - For `sfz` file support
+- [sfizz](https://github.com/sfztools/sfizz) - For [sfz file](https://sfzformat.com/) support
 
 `fftune` is built using `cmake`:
 
