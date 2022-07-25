@@ -19,6 +19,21 @@ TEST_F(SamplebufferTest, Storage) {
 	}
 }
 
+TEST_F(SamplebufferTest, WriteBack) {
+	float buffer[tests::config.buffer_size];
+	// initialize buffer with invalid data
+	for (size_t i = 0; i < buf.size; ++i) {
+		buffer[i] = -1.f;
+	}
+
+	buf.write(buffer);
+	// test that the data has been written correctly
+	for (size_t i = 0; i < buf.size; ++i) {
+		EXPECT_FLOAT_EQ(buffer[i], i);
+		EXPECT_FLOAT_EQ(buffer[i], buf.data[i]);
+	}
+}
+
 TEST_F(SamplebufferTest, Cycle) {
 	constexpr const auto hop = tests::config.buffer_size / 4;
 	// cycle buffer
