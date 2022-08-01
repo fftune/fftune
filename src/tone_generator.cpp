@@ -15,7 +15,11 @@ tone_generator::~tone_generator() {
 }
 
 bool tone_generator::init(const config &conf) {
-	return init(conf.buffer_size, conf.sample_rate, *conf.external_path);
+	std::filesystem::path p = "";
+	if (conf.external_path) {
+		p = *conf.external_path;
+	}
+	return init(conf.buffer_size, conf.sample_rate, p);
 }
 
 bool tone_generator::init(size_t buffer_size, float sample_rate, std::filesystem::path sfz) {
