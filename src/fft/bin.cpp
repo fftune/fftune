@@ -70,13 +70,38 @@ bins discrete_derivative(const bins &b) {
 }
 
 float bins_distance(const bins &a, const bins &b) {
-	// lower value means more similar
 	float result = 0.f;
-	const auto a_deriv = discrete_derivative(a);
-	const auto b_deriv = discrete_derivative(b);
-	for (size_t i = 0; i < a.size(); ++i) {
-		auto delta = std::abs(a_deriv[i].magnitude - b_deriv[i].magnitude);
-		result += delta;
+	// lower value means more similar
+	constexpr int neighbors = 10;
+	for (int i = 0; i < a.size(); ++i) {
+		float mean_a = 0.f;
+		float mean_b = 0.f;
+		size_t count = 0;
+		for (int j = std::min(0, i - neighbors); j < std::max(i + 10, static_cast<int>(a.size())); ++j) {
+			mean_a += a[j].magnitude;
+			mean_b += b[j].magnitude;
+			++count;
+		}
+		mean_a /= count;
+		mean_b /= count;
+
+		float standard_deviation_a = 0.f;
+		float standard_deviation_b = 0.f;
+		for (int j = std::min(0, i - neighbors); j < std::max(i + 10, static_cast<int>(a.size())); ++j) {
+			float diff = a[j].magnitude - mean_a;
+			standard_deviation_a += diff * diff;
+
+			diff = b[j].magnitude - mean_b;
+			standard_deviation_b += diff * diff;
+		}
+		standard_deviation_a = std::sqrt(standard_deviation_a / (count - 1));
+		standard_deviation_b = std::sqrt(standard_deviation_b / (count - 1));
+
+		float dev_a = (a[i].magnitude - mean_a) / standard_deviation_a;
+		float dev_b = (b[i].magnitude - mean_b) / standard_deviation_b;
+
+		auto delta = dev_a - dev_b;
+		result += delta * delta * delta * delta;
 	}
 	return result;
 }
