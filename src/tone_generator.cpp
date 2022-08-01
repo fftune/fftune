@@ -24,10 +24,6 @@ bool tone_generator::init(size_t buffer_size, float sample_rate, std::filesystem
 
 	bool result = true;
 
-#ifdef HAS_SFIZZ
-	sfizz.setSamplesPerBlock(SFIZZ_BUFFERSIZE);
-	sfizz.setSampleRate(sample_rate);
-
 	/**
 	 * Note that we allocate buffers for the whole buffer_size
 	 * Right now this is not really necessary as we only need SFIZZ_BUFFERSIZE amount of memory
@@ -36,6 +32,11 @@ bool tone_generator::init(size_t buffer_size, float sample_rate, std::filesystem
 	 */
 	left_out = static_cast<float *>(malloc(sizeof(float) * std::max(buffer_size, SFIZZ_BUFFERSIZE)));
 	right_out = static_cast<float *>(malloc(sizeof(float) * std::max(buffer_size, SFIZZ_BUFFERSIZE)));
+
+#ifdef HAS_SFIZZ
+	sfizz.setSamplesPerBlock(SFIZZ_BUFFERSIZE);
+	sfizz.setSampleRate(sample_rate);
+
 	std::fill(left_out, left_out + buffer_size, 0.f);
 	std::fill(right_out, right_out + buffer_size, 0.f);
 
