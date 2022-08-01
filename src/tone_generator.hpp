@@ -42,7 +42,7 @@ public:
 	 *
 	 * This activates the notes given via \p midis, effectively sending noteon Midi events.
 	 */
-	void start(const std::vector<note_estimate> &midis, size_t offset = 7);
+	void start(const std::vector<note_estimate> &midis, size_t offset = 3);
 	/**
 	 * @brief Generates pure harmonics
 	 *
