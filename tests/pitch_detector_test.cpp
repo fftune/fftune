@@ -11,8 +11,32 @@ protected:
 };
 
 
+TEST_F(PitchDetectorTest, Schmitt) {
+	fftune::pitch_detector<fftune::schmitt_config> p {tests::config};
+	const auto notes = p.detect(buf);
+	ASSERT_FALSE(notes.empty());
+	// we expect A4
+	ASSERT_EQ(fftune::MidiA4, notes.front().note);
+}
+
 TEST_F(PitchDetectorTest, Yin) {
 	fftune::pitch_detector<fftune::yin_config> p {tests::config};
+	const auto notes = p.detect(buf);
+	ASSERT_FALSE(notes.empty());
+	// we expect A4
+	ASSERT_EQ(fftune::MidiA4, notes.front().note);
+}
+
+TEST_F(PitchDetectorTest, Comb) {
+	fftune::pitch_detector<fftune::fast_comb_config> p {tests::config};
+	const auto notes = p.detect(buf);
+	ASSERT_FALSE(notes.empty());
+	// we expect A4
+	ASSERT_EQ(fftune::MidiA4, notes.front().note);
+}
+
+TEST_F(PitchDetectorTest, Sfizz) {
+	fftune::pitch_detector<fftune::fftune_sfizz_config> p {tests::config};
 	const auto notes = p.detect(buf);
 	ASSERT_FALSE(notes.empty());
 	// we expect A4
