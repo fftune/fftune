@@ -32,6 +32,7 @@ list(TRANSFORM PKGCONFIG_MODULES PREPEND "PkgConfig::")
 
 
 add_library("${PROJECT_NAME}" SHARED ${SRCS})
+set_target_properties("${PROJECT_NAME}" PROPERTIES VERSION "${PROJECT_VERSION}")
 target_link_libraries("${PROJECT_NAME}" ${PKGCONFIG_MODULES})
 target_sources("${PROJECT_NAME}" PUBLIC FILE_SET HEADERS BASE_DIRS "src" FILES ${HDRS})
 
