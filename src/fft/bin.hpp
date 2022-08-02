@@ -101,7 +101,24 @@ bins discrete_derivative(const bins &b);
  * A lower value means more similar
  */
 float bins_distance(const bins &a, const bins &b);
+/**
+ * @brief Computes a theoretical distance between two spectra
+ *
+ * This can be used to tell how similar \p a and \p b are.
+ *
+ * A lower value means more similar
+ *
+ * This is an alternative to bins_distance
+ */
 float bins_distance_complete(const bins &a, const bins &b);
+/**
+ * @brief Normalizes bins to be only positive
+ *
+ * To make all bins positive,
+ * bins magnitudes are shifted up by the amount of the minimum magnitude
+ *
+ * Now all bins are positive and happy. :)
+ */
 void bins_normalize_pos(bins &b);
 void bins_normalize_sin(bins &b);
 
