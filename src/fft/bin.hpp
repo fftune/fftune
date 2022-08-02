@@ -101,6 +101,7 @@ bins discrete_derivative(const bins &b);
  * A lower value means more similar
  */
 float bins_distance(const bins &a, const bins &b);
+float bins_distance_complete(const bins &a, const bins &b);
 void bins_normalize_pos(bins &b);
 void bins_normalize_sin(bins &b);
 

@@ -106,6 +106,42 @@ float bins_distance(const bins &a, const bins &b) {
 	return result;
 }
 
+float bins_distance_complete(const bins &a, const bins &b) {
+	// compute mean
+	float mean_a = 0.f;
+	float mean_b = 0.f;
+	for (size_t i = 0; i < a.size(); ++i) {
+		mean_a += a[i].magnitude;
+		mean_b += b[i].magnitude;
+	}
+	mean_a /= a.size();
+	mean_b /= b.size();
+
+	// compute standard deviation
+	float standard_deviation_a = 0.f;
+	float standard_deviation_b = 0.f;
+	for (size_t i = 0; i < a.size(); ++i) {
+		float diff = a[i].magnitude - mean_a;
+		standard_deviation_a += diff * diff;
+
+		diff = b[i].magnitude - mean_b;
+		standard_deviation_b += diff * diff;
+	}
+	standard_deviation_a = std::sqrt(standard_deviation_a / (a.size() - 1));
+	standard_deviation_b = std::sqrt(standard_deviation_b / (b.size() - 1));
+
+	// lower value means more similar
+	float result = 0.f;
+	for (size_t i = 0; i < a.size(); ++i) {
+		float dev_a = (a[i].magnitude - mean_a) / standard_deviation_a;
+		float dev_b = (b[i].magnitude - mean_b) / standard_deviation_b;
+
+		auto delta = dev_a - dev_b;
+		result += delta * delta * delta * delta;
+	}
+	return result;
+}
+
 void bins_normalize_pos(bins &b) {
 	// force only positive values by shifting everything up such that the minimum is now zero
 	const auto min_magnitude = std::ranges::min_element(b, [](const auto &l, const auto &r) { return l.magnitude < r.magnitude; })->magnitude;
