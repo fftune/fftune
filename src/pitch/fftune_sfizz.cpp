@@ -38,7 +38,7 @@ note_estimates fftune_sfizz::detect(const sample_buffer &in) {
 			match_volume(guess_buffer, mean_rec_volume);
 			const auto guess_spectrum = spectrum.detect(guess_buffer);
 
-			const auto score = bins_distance(rec_spectrum, guess_spectrum);
+			const auto score = bins_distance_complete(rec_spectrum, guess_spectrum);
 			// did we find a better candidate?
 			if (score < best_guess.second) {
 				confidence = score_confidence(best_guess.second, score);
