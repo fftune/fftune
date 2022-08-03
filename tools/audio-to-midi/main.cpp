@@ -16,7 +16,7 @@ void show_usage() {
 	-p, --polyphony NUM	Set the maximum amount of voices
 	-d, --stiffness NUM 	Set the Midi stiffness
 
-For more information visit the man page.
+For more information visit the man page audio-to-midi(1).
 )";
 }
 
