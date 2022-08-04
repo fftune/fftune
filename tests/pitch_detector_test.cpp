@@ -42,3 +42,24 @@ TEST_F(PitchDetectorTest, Sfizz) {
 	// we expect A4
 	ASSERT_EQ(fftune::MidiA4, notes.front().note);
 }
+
+TEST_F(PitchDetectorTest, Polyphonic) {
+	fftune::config conf = tests::config;
+	// test polyphony
+	conf.max_polyphony = 2;
+	fftune::pitch_detector<fftune::fftune_sfizz_config> p {conf};
+
+	// generate D4 and A4 simultaneously
+	const int d4 = fftune::MidiA4 - 7;
+	gen.gen_harmonics(buf, {fftune::note_estimate(d4), fftune::note_estimate(fftune::MidiA4)});
+
+	const auto notes = p.detect(buf);
+	// two notes should be detected
+	ASSERT_EQ(2, notes.size());
+
+	/**
+	 * the order of the notes does not matter
+	 * we just need to check that one of them is D4 and the other one is A4
+	 */
+	ASSERT_TRUE((notes[0].note == fftune::MidiA4 && notes[1].note == d4) || notes[0].note == d4 && notes[1].note == fftune::MidiA4);
+}
