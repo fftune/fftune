@@ -14,6 +14,7 @@ constexpr const int MidiA4 = 69;
 constexpr const float FreqA4 = 440.f;
 constexpr const int MidiMax = 108; // highest note on piano
 constexpr const int MidiMin = 21; // lowest note on piano
+constexpr const int MidiRange = MidiMax + 1 - MidiMin;
 constexpr const int MidiInvalid = -1;
 constexpr const int VelocityMax = 127; // maxium Midi velocity
 constexpr const int VelocityMin = 0; // minimum Midi velocity

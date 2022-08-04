@@ -12,6 +12,7 @@ namespace fftune {
 
 std::string to_lower(const std::string &s);
 float squared(const float n);
+size_t power(size_t a, size_t b);
 bool is_int(const float n);
 void save_string(const std::string &str, const std::filesystem::path &filename);
 

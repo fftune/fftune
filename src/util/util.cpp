@@ -15,6 +15,14 @@ float squared(const float n) {
 	return n * n;
 }
 
+size_t power(size_t a, size_t b) {
+	size_t result = 1;
+	for (size_t i = 0; i < b; ++i) {
+		result *= a;
+	}
+	return result;
+}
+
 bool is_int(const float n) {
 	float intpart;
 	const float fractpart = modf(n, &intpart);

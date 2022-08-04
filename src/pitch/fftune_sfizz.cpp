@@ -10,52 +10,78 @@ fftune_sfizz::fftune_sfizz(const config &conf)
 }
 
 note_estimates fftune_sfizz::detect(const sample_buffer &in) {
-	note_estimates result;
+	note_estimates sounding_notes;
 	const float mean_rec_volume = mean_volume(in);
 	const auto rec_spectrum = spectrum.detect(in);
 
-	// iterate over voices
-	for (size_t voice = 0; voice < conf.max_polyphony; ++voice) {
-		std::pair<int, float> best_guess {MidiInvalid, std::numeric_limits<float>::max()};
-		float confidence = 0.f;
-		// iterate over all possible notes
-		for (int guess = MidiMin; guess <= MidiMax; ++guess) {
-			if (std::ranges::any_of(result, [&](const auto &e) { return e.note == guess; })) {
-				// do not add the same note twice in a polyphonic setting
-				continue;
-			}
-			note_estimates sounding_notes = result;
-			// gather all currently pending notes plus our next guess
-			sounding_notes.push_back(note_estimate(guess));
-			// generate sound from our notes
-			tone_gen.start(sounding_notes);
-			tone_gen.gen(guess_buffer);
+	const int max_id = power(MidiRange, conf.max_polyphony);
+	std::pair<int, float> best_guess {MidiInvalid, std::numeric_limits<float>::max()};
+	float confidence = 0.f;
 
-			/**
-			 * Match the volume of the generated sound with the volume of the input waveform
-			 * This is to avoid differences in volume having an effect on further steps of the algorithm
-			 */
-			match_volume(guess_buffer, mean_rec_volume);
-			const auto guess_spectrum = spectrum.detect(guess_buffer);
+	// iterate over all possible notes
+	for (int id = 0; id < max_id; ++id) {
+		sounding_notes.clear();
+		// gather all currently pending notes
+		this->add_notes(sounding_notes, id);
+		// generate sound from our notes
+		tone_gen.start(sounding_notes);
+		tone_gen.gen(guess_buffer);
 
-			const auto score = bins_distance_complete(rec_spectrum, guess_spectrum);
-			// did we find a better candidate?
-			if (score < best_guess.second) {
-				confidence = score_confidence(best_guess.second, score);
-				best_guess = std::pair(guess, score);
-			} else {
-				// confidence can't be improved, only get lower
-				confidence = std::min(confidence, score_confidence(best_guess.second, score));
-			}
-		}
+		/**
+		 * Match the volume of the generated sound with the volume of the input waveform
+		 * This is to avoid differences in volume having an effect on further steps of the algorithm
+		 */
+		match_volume(guess_buffer, mean_rec_volume);
+		const auto guess_spectrum = spectrum.detect(guess_buffer);
 
-		// check if we are confident enough
-		constexpr const float confidence_threshold = 0.00f;
-		if (confidence > confidence_threshold) {
-			result.push_back(note_estimate(best_guess.first, volume_to_velocity(mean_rec_volume), confidence));
+		// evaluate similarity with a spectral difference function
+		const auto score = bins_distance_complete(rec_spectrum, guess_spectrum);
+		// did we find a better candidate?
+		if (score < best_guess.second) {
+			confidence = score_confidence(best_guess.second, score);
+			best_guess = std::pair(id, score);
+		} else {
+			// confidence can't be improved, only get lower
+			confidence = std::min(confidence, score_confidence(best_guess.second, score));
 		}
 	}
-	return result;
+
+	sounding_notes.clear();
+	// check if we are confident enough
+	constexpr const float confidence_threshold = 0.00f;
+	if (confidence > confidence_threshold) {
+		// reload the best guess
+		this->add_notes(sounding_notes, best_guess.first);
+
+		for (auto &n : sounding_notes) {
+			n.velocity = volume_to_velocity(mean_rec_volume);
+			n.confidence = confidence;
+		}
+	}
+
+	return sounding_notes;
+}
+
+void fftune_sfizz::add_notes(note_estimates &notes, int id) {
+	// iterate over all voices
+	for (size_t voice = 0; voice < conf.max_polyphony; ++voice) {
+		/**
+		 * This is a clever hack to encode all notes in a single integer
+		 * Here we do the decoding via modulo.
+		 *
+		 * The reason that we do this is to avoid manually nesting for loops for polyphonic support
+		 * Instead we can iterate with a single for loop over all voices simultaneously,
+		 * because we encode all voices in a single variable.
+		 */
+		const int note = MidiMin + id % MidiRange;
+
+		// do not add the same note twice in a polyphonic setting
+		if (!std::ranges::any_of(notes, [&](const auto &e) { return e.note == note; })) {
+			notes.push_back(note_estimate(note));
+		}
+
+		id /= MidiRange;
+	}
 }
 
 float fftune_sfizz::score_confidence(const float a, const float b) {

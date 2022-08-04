@@ -26,6 +26,7 @@ public:
 	 */
 	note_estimates detect(const sample_buffer &in);
 private:
+	void add_notes(note_estimates &notes, int id);
 	float score_confidence(const float a, const float b);
 	config conf;
 	tone_generator tone_gen;
