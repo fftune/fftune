@@ -103,7 +103,7 @@ float fftune_sfizz::score_confidence(const float a, const float b) {
 	 *
 	 * Accomodate for this, by scaling linearly with buffer_size
 	 */
-	const float score_threshold = conf.buffer_size / 4.f;
+	const float score_threshold = conf.buffer_size / (4.f * conf.max_polyphony);
 	return std::min(1.f, std::abs(a - b) / score_threshold);
 }
 
