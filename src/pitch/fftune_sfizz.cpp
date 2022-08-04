@@ -40,6 +40,16 @@ note_estimates fftune_sfizz::detect(const sample_buffer &in) {
 		if (score < best_guess.second) {
 			confidence = score_confidence(best_guess.second, score);
 			best_guess = std::pair(id, score);
+
+			if (score <= 0) {
+				/**
+				 * Found an optimal and perfect match.
+				 * We can hardly find anything better than that,
+				 * so return early.
+				 */
+				confidence = 1.f;
+				break;
+			}
 		} else {
 			// confidence can't be improved, only get lower
 			confidence = std::min(confidence, score_confidence(best_guess.second, score));
