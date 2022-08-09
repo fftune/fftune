@@ -6,6 +6,8 @@ This is an audio pitch detection library written in modern C++20, providing mult
 
 ## Building
 
+Note that Arch Linux users can simply install the native [fftune-git](https://aur.archlinux.org/packages/fftune-git) package from the AUR.
+
 The following libraries are required to be installed:
 - [fftw3f](https://www.fftw.org/) - For fast Fourier transformations
 - [libsmf](http://libsmf.sourceforge.net/) - For Midi file support
