@@ -24,21 +24,6 @@ fft::fft(size_t num_samples, float sample_rate, fft_heuristic heuristic) {
 	in_buf = fftwf_alloc_real(num_samples);
 	out_buf = fftwf_alloc_complex(num_samples);
 
-	/**
-	 * Init the fftw3 input buffer with 0
-	 * There seems to be a very weird bug in fftw3, that causes memory corruption later on if we don't init with 0
-	 * For example, fft might return only NaN
-	 * The problem occurs only very indeterministically and it is never triggered if we use both FFTW_MEASURE and fftwf_cleanup()
-	 * If we do not use one of the above, the problem starts occuring again
-	 * I don't know why this problem exists and according to fftw3 docs, we don't need to init with 0, just allocate
-	 * But I have wasted too much time debugging this mess, so just init the damn array if it takes this to workaround the issue
-	 *
-	 * From https://www.fftw.org/fftw3_doc/Real_002ddata-DFTs.html
-	 * "The arrays need not be initialized, but they must be allocated."
-	 * So I don't understand why I do have to initialize it, maybe it's just weird UB
-	 */
-	std::fill(in_buf, in_buf + num_samples, 0.f);
-
 	plan = fftwf_plan_dft_r2c_1d(num_samples, in_buf, out_buf, fft_heuristic_to_flag(heuristic));
 }
 
