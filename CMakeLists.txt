@@ -3,7 +3,7 @@ cmake_policy(SET CMP0048 NEW)
 project(fftune VERSION 1.0 DESCRIPTION "Pitch detection library")
 
 option(BUILD_TESTING "Build the testing tree." OFF)
-option(USE_SFIZZ "Build with sfizz support." ON)
+option(USE_SFIZZ "Build with sfizz support." OFF)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
