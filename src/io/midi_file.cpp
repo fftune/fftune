@@ -74,18 +74,8 @@ void midi_file::add_notes(note_estimates notes, double duration) {
 				continue;
 			}
 			// cool, let's find all the notes that were previously on and are now not on anymore
-#ifdef __clang__
-			// clang does not yet support ranges filter
-			midi_events orphaned_notes;
-			for (const auto &i : pending_events) {
-				if (std::ranges::none_of(notes, [&](const auto &n) { return i.note == n.note; })) {
-					orphaned_notes.push_back(i);
-				}
-			}
-#else
 			// all notes that were played previously but are not played anymore
 			auto orphaned_notes = pending_events | std::ranges::views::filter([&](const auto &ev) { return std::ranges::none_of(notes, [&](const auto &n) { return ev.note == n.note; }); });
-#endif
 			midi_event new_note = {note.note, clock, note.velocity};
 			if (orphaned_notes.empty()) {
 				// no orphans available, create a new voice for the new note
