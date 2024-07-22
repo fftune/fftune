@@ -1,5 +1,4 @@
-cmake_minimum_required(VERSION 3.23)
-cmake_policy(SET CMP0048 NEW)
+cmake_minimum_required(VERSION 3.30)
 project(fftune VERSION 1.0 DESCRIPTION "Pitch detection library")
 
 option(BUILD_TESTING "Build the testing tree." OFF)
