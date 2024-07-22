@@ -3,7 +3,7 @@ cmake_policy(SET CMP0048 NEW)
 project(fftune VERSION 1.0 DESCRIPTION "Pitch detection library")
 
 option(BUILD_TESTING "Build the testing tree." OFF)
-option(NO_SFIZZ "Build without sfizz support." OFF)
+option(USE_SFIZZ "Build with sfizz support." ON)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -19,7 +19,7 @@ file(GLOB_RECURSE HDRS "src/*.hpp")
 find_package(PkgConfig REQUIRED)
 list(APPEND PKGCONFIG_MODULES "fftw3f" "smf" "sndfile")
 
-if(NOT NO_SFIZZ)
+if(USE_SFIZZ)
 	list(APPEND PKGCONFIG_MODULES "sfizz")
 	add_compile_definitions(HAS_SFIZZ)
 endif()
