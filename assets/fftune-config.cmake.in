@@ -2,8 +2,8 @@
 check_required_components(fftune)
 
 find_package(PkgConfig REQUIRED)
-list(APPEND PKGCONFIG_MODULES @PKGCONFIG_REQUIRES@)
-foreach(PKG IN LISTS PKGCONFIG_MODULES)
+list(APPEND FFTUNE_PKGCONFIG_MODULES @PKGCONFIG_REQUIRES@)
+foreach(PKG IN LISTS FFTUNE_PKGCONFIG_MODULES)
 	pkg_check_modules("${PKG}" REQUIRED IMPORTED_TARGET "${PKG}")
 endforeach()
 include("${CMAKE_CURRENT_LIST_DIR}/fftune-targets.cmake")
