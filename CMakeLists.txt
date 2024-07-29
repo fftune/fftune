@@ -44,8 +44,8 @@ set(CMAKE_INSTALL_DEST "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}")
 install(TARGETS "${PROJECT_NAME}" EXPORT "${CMAKE_TARGETS}" FILE_SET HEADERS DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}")
 install(EXPORT "${CMAKE_TARGETS}" FILE "${CMAKE_TARGETS}.cmake" NAMESPACE "${PROJECT_NAME}::" DESTINATION "${CMAKE_INSTALL_DEST}")
 configure_package_config_file("assets/fftune-config.cmake.in" "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config.cmake" INSTALL_DESTINATION "${CMAKE_INSTALL_DEST}")
-write_basic_package_version_file("${PROJECT_NAME}-version.cmake" COMPATIBILITY SameMajorVersion)
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config.cmake" "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-version.cmake" DESTINATION "${CMAKE_INSTALL_DEST}")
+write_basic_package_version_file("${PROJECT_NAME}-config-version.cmake" COMPATIBILITY SameMajorVersion)
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config.cmake" "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config-version.cmake" DESTINATION "${CMAKE_INSTALL_DEST}")
 
 install(DIRECTORY "${CMAKE_SOURCE_DIR}/doc/man/" TYPE MAN)
 

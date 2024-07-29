@@ -8,7 +8,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 file(GLOB_RECURSE SRCS "src/*.cpp")
 
 # depend on fftune
-find_package(fftune REQUIRED)
+find_package(fftune 1.0 REQUIRED)
 
 add_executable("${PROJECT_NAME}" ${SRCS})
 target_link_libraries("${PROJECT_NAME}" fftune::fftune)
