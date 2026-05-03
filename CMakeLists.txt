@@ -47,9 +47,9 @@ configure_package_config_file("assets/fftune-config.cmake.in" "${CMAKE_CURRENT_B
 write_basic_package_version_file("${PROJECT_NAME}-config-version.cmake" COMPATIBILITY SameMajorVersion)
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config.cmake" "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config-version.cmake" DESTINATION "${CMAKE_INSTALL_DEST}")
 
-install(DIRECTORY "${CMAKE_SOURCE_DIR}/doc/man/" TYPE MAN)
+install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/doc/man/" TYPE MAN)
 
-configure_file("${CMAKE_SOURCE_DIR}/assets/fftune.pc.in" "${CMAKE_CURRENT_BINARY_DIR}/fftune.pc" @ONLY)
+configure_file("${CMAKE_CURRENT_SOURCE_DIR}/assets/fftune.pc.in" "${CMAKE_CURRENT_BINARY_DIR}/fftune.pc" @ONLY)
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/fftune.pc" DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
 
 
