@@ -4,7 +4,7 @@ namespace fftune {
 
 void gen_sine(float freq, float sample_rate, float *buf, size_t buf_size) {
 	for (size_t i = 0; i < buf_size; ++i) {
-		buf[i] = sin(freq / sample_rate * i * 2.f * std::numbers::pi);
+		buf[i] = sin(freq / sample_rate * i * 2.f * M_PI);
 	}
 }
 
@@ -19,7 +19,7 @@ void gen_harmonic(float freq0, float sample_rate, float *buf, size_t buf_size, s
 			 * Interpolate inbetween
 			 */
 			const float dampening = 1.f - (static_cast<float>(overtone - 1) / static_cast<float>(overtones - 1) * (1.f - linear_dampening));
-			sum += dampening * sin(freq0 * overtone / sample_rate * i * 2.f * std::numbers::pi);
+			sum += dampening * sin(freq0 * overtone / sample_rate * i * 2.f * M_PI);
 		}
 		// normalize
 		sum /= (overtones - 1);
