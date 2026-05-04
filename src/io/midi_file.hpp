@@ -3,9 +3,13 @@
 #include <array>
 #include <string>
 
+#ifdef HAS_SMF
+
 extern "C" {
 #include <smf.h>
 }
+
+#endif
 
 #include "util/music.hpp"
 
@@ -28,12 +32,15 @@ public:
 	 * The Midi event is initialized with the given parameters
 	 */
 	midi_event(int note, double clock, int velocity);
+
+#ifdef HAS_SMF
 	/**
 	 * @brief Converts a midi_event to smf
 	 *
 	 * This will return an equivalent smf_event_t *
 	 */
 	smf_event_t *to_smf(bool note_on = true) const;
+#endif
 
 	// TODO: Maybe add a midi_t typedef
 
@@ -64,7 +71,7 @@ public:
  */
 using midi_events = std::vector<midi_event>;
 
-
+#ifdef HAS_SMF
 /**
  * @brief An abstraction over a Midi file
  *
@@ -116,5 +123,5 @@ private:
 	size_t stiffness = 0;
 	size_t last_change = 0;
 };
-
+#endif
 }

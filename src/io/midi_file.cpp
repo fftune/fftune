@@ -14,6 +14,7 @@ midi_event::midi_event(int note, double clock, int velocity) {
 	this->velocity = velocity;
 }
 
+#ifdef HAS_SMF
 smf_event_t *midi_event::to_smf(bool note_on) const {
 	if (note_on) {
 		return smf_event_new_from_bytes(MIDI_NOTE_ON, note, velocity);
@@ -22,7 +23,6 @@ smf_event_t *midi_event::to_smf(bool note_on) const {
 		return smf_event_new_from_bytes(MIDI_NOTE_OFF, note, 127);
 	}
 }
-
 
 midi_file::midi_file(size_t stiffness) {
 	this->stiffness = stiffness;
@@ -109,5 +109,5 @@ void midi_file::flush_event(const midi_event &event) {
 	ev = event.to_smf(false);
 	smf_track_add_event_seconds(track, ev, clock);
 }
-
+#endif
 }
