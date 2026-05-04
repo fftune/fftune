@@ -3,6 +3,8 @@
 
 namespace fftune {
 
+#ifdef HAS_SNDFILE
+
 bool dispatch_audio_to_midi(const std::filesystem::path &audio, const std::filesystem::path &midi, config conf) {
 	switch (conf.algorithm) {
 	case pitch_detection_method::Yin:
@@ -24,4 +26,5 @@ bool dispatch_audio_to_midi(const std::filesystem::path &audio, const std::files
 	}
 }
 
+#endif
 }

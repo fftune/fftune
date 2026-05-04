@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.30)
 project(fftune VERSION 1.0 DESCRIPTION "Pitch detection library")
 
 option(BUILD_TESTING "Build the testing tree." OFF)
+option(USE_SNDFILE "Build with sndfile support." ON)
 option(USE_SFIZZ "Build with sfizz support." OFF)
 
 set(CMAKE_CXX_STANDARD 20)
@@ -16,8 +17,12 @@ file(GLOB_RECURSE HDRS "src/*.hpp")
 
 # dependencies
 find_package(PkgConfig REQUIRED)
-list(APPEND PKGCONFIG_MODULES "fftw3f" "smf" "sndfile")
+list(APPEND PKGCONFIG_MODULES "fftw3f" "smf")
 
+if(USE_SNDFILE)
+	list(APPEND PKGCONFIG_MODULES "sndfile")
+	add_compile_definitions(HAS_SNDFILE)
+endif()
 if(USE_SFIZZ)
 	list(APPEND PKGCONFIG_MODULES "sfizz")
 	add_compile_definitions(HAS_SFIZZ)
@@ -54,7 +59,9 @@ install(FILES "${CMAKE_CURRENT_BINARY_DIR}/fftune.pc" DESTINATION "${CMAKE_INSTA
 
 
 # tools
-add_subdirectory(tools)
+if(USE_SNDFILE)
+	add_subdirectory(tools)
+endif()
 
 # tests
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME AND BUILD_TESTING)

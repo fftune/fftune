@@ -1,6 +1,8 @@
 #include "audio_file.hpp"
 #include "io/virt_file.hpp"
 
+#ifdef HAS_SNDFILE
+
 namespace fftune {
 
 audio_file::audio_file() {
@@ -138,3 +140,5 @@ void audio_file::alloc_buffer(size_t num_frames) {
 }
 
 }
+
+#endif

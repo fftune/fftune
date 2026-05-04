@@ -1,5 +1,7 @@
 #include "virt_file.hpp"
 
+#ifdef HAS_SNDFILE
+
 namespace fftune {
 namespace virt_file {
 
@@ -62,3 +64,5 @@ virt_data::virt_data(std::istream *data, int raw_format, int raw_channels, int r
 
 }
 }
+
+#endif

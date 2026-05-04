@@ -19,6 +19,8 @@ namespace fftune {
  * A good starting point for reading the documentation is the pitch_detector class
  */
 
+#ifdef HAS_SNDFILE
+
 // https://isocpp.org/wiki/faq/templates#templates-defn-vs-decl
 bool dispatch_audio_to_midi(const std::filesystem::path &audio, const std::filesystem::path &midi, config conf);
 
@@ -77,4 +79,5 @@ bool audio_to_midi(const std::filesystem::path &audio, const std::filesystem::pa
 	return audio_to_midi<T>(input_file, midi, conf);
 }
 
+#endif
 }

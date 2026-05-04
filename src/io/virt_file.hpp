@@ -1,5 +1,7 @@
 #pragma once
 
+#ifdef HAS_SNDFILE
+
 #include <fstream>
 #include <iostream>
 
@@ -103,3 +105,5 @@ public:
 }
 
 }
+
+#endif

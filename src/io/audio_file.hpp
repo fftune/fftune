@@ -1,5 +1,7 @@
 #pragma once
 
+#ifdef HAS_SNDFILE
+
 #include <string>
 
 #include <sndfile.hh>
@@ -198,3 +200,5 @@ private:
 };
 
 }
+
+#endif
