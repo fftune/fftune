@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.30)
 project(fftune VERSION 1.0 DESCRIPTION "Pitch detection library")
 
 option(BUILD_TESTING "Build the testing tree." OFF)
+option(USE_FFTW3F "Build with fftw3f FFT support." ON)
 option(USE_SMF "Build with SMF midi file support." ON)
 option(USE_SNDFILE "Build with sndfile audio file support." ON)
 option(USE_SFIZZ "Build with sfizz soundfont support." OFF)
@@ -18,8 +19,11 @@ file(GLOB_RECURSE HDRS "src/*.hpp")
 
 # dependencies
 find_package(PkgConfig REQUIRED)
-list(APPEND PKGCONFIG_MODULES "fftw3f")
 
+if(USE_FFTW3F)
+	list(APPEND PKGCONFIG_MODULES "fftw3f")
+	add_compile_definitions(HAS_FFTW3F)
+endif()
 if(USE_SMF)
 	list(APPEND PKGCONFIG_MODULES "smf")
 	add_compile_definitions(HAS_SMF)
