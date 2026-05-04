@@ -1,5 +1,7 @@
 #pragma once
 
+#ifdef HAS_FFTW3F
+
 #include "fft/fft.hpp"
 #include "tone_generator.hpp"
 
@@ -35,3 +37,5 @@ private:
 };
 
 }
+
+#endif

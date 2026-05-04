@@ -1,5 +1,7 @@
 #include "double_fft.hpp"
 
+#ifdef HAS_FFTW3F
+
 namespace fftune {
 
 double_fft::double_fft(const config &conf)
@@ -36,3 +38,5 @@ note_estimates double_fft::detect(const sample_buffer &in) {
 }
 
 }
+
+#endif

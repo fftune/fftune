@@ -1,5 +1,7 @@
 #include "fftune_sfizz.hpp"
 
+#ifdef HAS_FFTW3F
+
 namespace fftune {
 
 fftune_sfizz::fftune_sfizz(const config &conf)
@@ -108,3 +110,5 @@ float fftune_sfizz::score_confidence(const float a, const float b) {
 }
 
 }
+
+#endif

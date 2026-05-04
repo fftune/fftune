@@ -1,5 +1,7 @@
 #include "fft.hpp"
 
+#ifdef HAS_FFTW3F
+
 #include "window.hpp"
 
 namespace fftune {
@@ -53,3 +55,5 @@ size_t fft::bins_size() const {
 }
 
 }
+
+#endif

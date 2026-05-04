@@ -1,5 +1,7 @@
 #pragma once
 
+#ifdef HAS_FFTW3F
+
 #include "fft/fft.hpp"
 
 namespace fftune {
@@ -29,3 +31,5 @@ private:
 };
 
 }
+
+#endif

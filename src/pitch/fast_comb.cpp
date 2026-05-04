@@ -1,5 +1,7 @@
 #include "fast_comb.hpp"
 
+#ifdef HAS_FFTW3F
+
 namespace fftune {
 
 fast_comb::fast_comb(const config &conf)
@@ -50,3 +52,5 @@ note_estimates fast_comb::detect(const sample_buffer &in) {
 }
 
 }
+
+#endif

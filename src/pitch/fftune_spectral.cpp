@@ -1,5 +1,7 @@
 #include "fftune_spectral.hpp"
 
+#ifdef HAS_FFTW3F
+
 namespace fftune {
 
 fftune_spectral::fftune_spectral(const config &conf)
@@ -54,3 +56,5 @@ note_estimates fftune_spectral::detect(const sample_buffer &in) {
 }
 
 }
+
+#endif

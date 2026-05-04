@@ -1,6 +1,7 @@
 #pragma once
 
-#include "fft/fft.hpp"
+#include "config.hpp"
+#include "pitch/pitch.hpp"
 
 namespace fftune {
 

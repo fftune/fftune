@@ -1,5 +1,7 @@
 #pragma once
 
+#ifdef HAS_FFTW3F
+
 #include <cstring>
 #include <vector>
 
@@ -69,3 +71,5 @@ private:
 };
 
 }
+
+#endif
